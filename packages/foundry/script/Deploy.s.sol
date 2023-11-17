@@ -2,6 +2,12 @@
 pragma solidity ^0.8.19;
 
 import "../contracts/YourContract.sol";
+
+import "../contracts/nix/MockRoyaltyEngineV1.sol";
+import "../contracts/utils/WETH9.sol";
+import "../contracts/nix/Nix.sol";
+
+
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -15,6 +21,33 @@ contract DeployScript is ScaffoldETHDeploy {
             );
         }
         vm.startBroadcast(deployerPrivateKey);
+
+        // Deploy contracts
+        WETH9 weth = new WETH9();
+        console.logString(
+            string.concat(
+                "WETH9 deployed at: ",
+                vm.toString(address(weth))
+            )
+        );
+        MockRoyaltyEngineV1 royaltyEngine = new MockRoyaltyEngineV1( vm.addr(deployerPrivateKey),  vm.addr(deployerPrivateKey));
+        console.logString(
+            string.concat(
+                "RoyaltyEngine deployed at: ",
+                vm.toString(address(royaltyEngine))
+            )
+        );
+        Nix nix = new Nix(address(weth), address(royaltyEngine));
+        console.logString(
+            string.concat(
+                "Nix deployed at: ",
+                vm.toString(address(nix))
+            )
+        );
+
+
+
+        // Old contracts
         YourContract yourContract = new YourContract(
             vm.addr(deployerPrivateKey)
         );
@@ -24,6 +57,9 @@ contract DeployScript is ScaffoldETHDeploy {
                 vm.toString(address(yourContract))
             )
         );
+
+
+
         vm.stopBroadcast();
 
         /**
