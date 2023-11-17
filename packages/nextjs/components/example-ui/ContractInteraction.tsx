@@ -13,7 +13,7 @@ export const ContractInteraction = () => {
     contractName: "YourContract",
     functionName: "setGreeting",
     args: [newGreeting],
-    value: "0.01",
+    value: BigInt(10000000000000000),
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
     },
