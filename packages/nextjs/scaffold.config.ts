@@ -1,4 +1,4 @@
-import * as chains from "wagmi/chains";
+import * as chains from "viem/chains";
 
 export type ScaffoldConfig = {
   targetNetwork: chains.Chain;
@@ -30,7 +30,7 @@ const scaffoldConfig = {
   walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "3a8170812b534d0ff9d794f19a901d64",
 
   // Only show the Burner Wallet when running on hardhat network
-  onlyLocalBurnerWallet: true,
+  onlyLocalBurnerWallet: false,
 
   /**
    * Auto connect:
