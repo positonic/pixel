@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { InheritanceTooltip } from "./InheritanceTooltip";
 import { Abi, AbiFunction } from "abitype";
 import { Address, TransactionReceipt } from "viem";
 import { useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
@@ -19,15 +18,9 @@ type WriteOnlyFunctionFormProps = {
   abiFunction: AbiFunction;
   onChange: () => void;
   contractAddress: Address;
-  inheritedFrom?: string;
 };
 
-export const WriteOnlyFunctionForm = ({
-  abiFunction,
-  onChange,
-  contractAddress,
-  inheritedFrom,
-}: WriteOnlyFunctionFormProps) => {
+export const WriteOnlyFunctionForm = ({ abiFunction, onChange, contractAddress }: WriteOnlyFunctionFormProps) => {
   const [form, setForm] = useState<Record<string, any>>(() => getInitialFormState(abiFunction));
   const [txValue, setTxValue] = useState<string | bigint>("");
   const { chain } = useNetwork();
@@ -39,6 +32,7 @@ export const WriteOnlyFunctionForm = ({
     isLoading,
     writeAsync,
   } = useContractWrite({
+    chainId: getTargetNetwork().id,
     address: contractAddress,
     functionName: abiFunction.name,
     abi: [abiFunction] as Abi,
@@ -87,10 +81,7 @@ export const WriteOnlyFunctionForm = ({
   return (
     <div className="py-5 space-y-3 first:pt-0 last:pb-1">
       <div className={`flex gap-3 ${zeroInputs ? "flex-row justify-between items-center" : "flex-col"}`}>
-        <p className="font-medium my-0 break-words">
-          {abiFunction.name}
-          <InheritanceTooltip inheritedFrom={inheritedFrom} />
-        </p>
+        <p className="font-medium my-0 break-words">{abiFunction.name}</p>
         {inputs}
         {abiFunction.stateMutability === "payable" ? (
           <IntegerInput
@@ -115,8 +106,11 @@ export const WriteOnlyFunctionForm = ({
             }`}
             data-tip={`${writeDisabled && "Wallet not connected or in the wrong network"}`}
           >
-            <button className="btn btn-secondary btn-sm" disabled={writeDisabled || isLoading} onClick={handleWrite}>
-              {isLoading && <span className="loading loading-spinner loading-xs"></span>}
+            <button
+              className={`btn btn-secondary btn-sm ${isLoading ? "loading" : ""}`}
+              disabled={writeDisabled}
+              onClick={handleWrite}
+            >
               Send 💸
             </button>
           </div>

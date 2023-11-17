@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPublicClient, http, toHex } from "viem";
-import { hardhat } from "viem/chains";
+import { hardhat } from "wagmi/chains";
 
 const publicClient = createPublicClient({
   chain: hardhat,

@@ -1,41 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  Block,
-  Hash,
-  Transaction,
-  TransactionReceipt,
-  createTestClient,
-  publicActions,
-  walletActions,
-  webSocket,
-} from "viem";
-import { hardhat } from "viem/chains";
+import { Block, Transaction, TransactionReceipt } from "viem";
+import { usePublicClient } from "wagmi";
+import { hardhat } from "wagmi/chains";
 import { decodeTransactionData } from "~~/utils/scaffold-eth";
 
 const BLOCKS_PER_PAGE = 20;
 
-export const testClient = createTestClient({
-  chain: hardhat,
-  mode: "hardhat",
-  transport: webSocket("ws://127.0.0.1:8545"),
-})
-  .extend(publicActions)
-  .extend(walletActions);
-
 export const useFetchBlocks = () => {
+  const client = usePublicClient({ chainId: hardhat.id });
+
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [transactionReceipts, setTransactionReceipts] = useState<{
     [key: string]: TransactionReceipt;
   }>({});
   const [currentPage, setCurrentPage] = useState(0);
   const [totalBlocks, setTotalBlocks] = useState(0n);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   const fetchBlocks = useCallback(async () => {
+    setIsLoading(true);
     setError(null);
 
     try {
-      const blockNumber = await testClient.getBlockNumber();
+      const blockNumber = await client.getBlockNumber();
       setTotalBlocks(blockNumber);
 
       const startingBlock = blockNumber - BigInt(currentPage * BLOCKS_PER_PAGE);
@@ -46,7 +34,7 @@ export const useFetchBlocks = () => {
 
       const blocksWithTransactions = blockNumbersToFetch.map(async blockNumber => {
         try {
-          return testClient.getBlock({ blockNumber, includeTransactions: true });
+          return client.getBlock({ blockNumber, includeTransactions: true });
         } catch (err) {
           setError(err instanceof Error ? err : new Error("An error occurred."));
           throw err;
@@ -62,7 +50,7 @@ export const useFetchBlocks = () => {
         fetchedBlocks.flatMap(block =>
           block.transactions.map(async tx => {
             try {
-              const receipt = await testClient.getTransactionReceipt({ hash: (tx as Transaction).hash });
+              const receipt = await client.getTransactionReceipt({ hash: (tx as Transaction).hash });
               return { [(tx as Transaction).hash]: receipt };
             } catch (err) {
               setError(err instanceof Error ? err : new Error("An error occurred."));
@@ -77,50 +65,47 @@ export const useFetchBlocks = () => {
     } catch (err) {
       setError(err instanceof Error ? err : new Error("An error occurred."));
     }
-  }, [currentPage]);
+    setIsLoading(false);
+  }, [client, currentPage]);
 
   useEffect(() => {
     fetchBlocks();
   }, [fetchBlocks]);
 
   useEffect(() => {
-    const handleNewBlock = async (newBlock: any) => {
+    const handleNewBlock = async (newBlock: Block) => {
       try {
-        if (currentPage === 0) {
-          if (newBlock.transactions.length > 0) {
-            const transactionsDetails = await Promise.all(
-              newBlock.transactions.map((txHash: string) => testClient.getTransaction({ hash: txHash as Hash })),
+        if (!blocks.some(block => block.number === newBlock.number)) {
+          if (currentPage === 0) {
+            setBlocks(prevBlocks => [newBlock, ...prevBlocks.slice(0, BLOCKS_PER_PAGE - 1)]);
+
+            newBlock.transactions.forEach(tx => decodeTransactionData(tx as Transaction));
+
+            const receipts = await Promise.all(
+              newBlock.transactions.map(async tx => {
+                try {
+                  const receipt = await client.getTransactionReceipt({ hash: (tx as Transaction).hash });
+                  return { [(tx as Transaction).hash]: receipt };
+                } catch (err) {
+                  setError(err instanceof Error ? err : new Error("An error occurred."));
+                  throw err;
+                }
+              }),
             );
-            newBlock.transactions = transactionsDetails;
+
+            setTransactionReceipts(prevReceipts => ({ ...prevReceipts, ...Object.assign({}, ...receipts) }));
           }
-
-          newBlock.transactions.forEach((tx: Transaction) => decodeTransactionData(tx as Transaction));
-
-          const receipts = await Promise.all(
-            newBlock.transactions.map(async (tx: Transaction) => {
-              try {
-                const receipt = await testClient.getTransactionReceipt({ hash: (tx as Transaction).hash });
-                return { [(tx as Transaction).hash]: receipt };
-              } catch (err) {
-                setError(err instanceof Error ? err : new Error("An error occurred fetching receipt."));
-                throw err;
-              }
-            }),
-          );
-
-          setBlocks(prevBlocks => [newBlock, ...prevBlocks.slice(0, BLOCKS_PER_PAGE - 1)]);
-          setTransactionReceipts(prevReceipts => ({ ...prevReceipts, ...Object.assign({}, ...receipts) }));
-        }
-        if (newBlock.number) {
-          setTotalBlocks(newBlock.number);
+          if (newBlock.number) {
+            setTotalBlocks(newBlock.number);
+          }
         }
       } catch (err) {
         setError(err instanceof Error ? err : new Error("An error occurred."));
       }
     };
 
-    return testClient.watchBlocks({ onBlock: handleNewBlock, includeTransactions: true });
-  }, [currentPage]);
+    return client.watchBlocks({ onBlock: handleNewBlock, includeTransactions: true });
+  }, [blocks, client, currentPage]);
 
   return {
     blocks,
@@ -128,6 +113,7 @@ export const useFetchBlocks = () => {
     currentPage,
     totalBlocks,
     setCurrentPage,
+    isLoading,
     error,
   };
 };

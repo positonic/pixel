@@ -1,8 +1,8 @@
-import { Account, Address, Chain, Transport, getContract } from "viem";
-import { PublicClient, usePublicClient } from "wagmi";
+import { Abi } from "abitype";
+import { getContract } from "viem";
 import { GetWalletClientResult } from "wagmi/actions";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
-import { Contract, ContractName } from "~~/utils/scaffold-eth/contract";
+import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 /**
  * Gets a deployed contract by contract name and returns a contract instance
@@ -10,34 +10,24 @@ import { Contract, ContractName } from "~~/utils/scaffold-eth/contract";
  * @param config.contractName - Deployed contract name
  * @param config.walletClient - An viem wallet client instance (optional)
  */
-export const useScaffoldContract = <
-  TContractName extends ContractName,
-  TWalletClient extends Exclude<GetWalletClientResult, null> | undefined,
->({
+export const useScaffoldContract = <TContractName extends ContractName>({
   contractName,
   walletClient,
 }: {
   contractName: TContractName;
-  walletClient?: TWalletClient | null;
+  walletClient?: GetWalletClientResult;
 }) => {
   const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
-  const publicClient = usePublicClient();
+
+  // type GetWalletClientResult = WalletClient | null, hence narrowing it to undefined so that it can be passed to getContract
+  const walletClientInstance = walletClient != null ? walletClient : undefined;
 
   let contract = undefined;
   if (deployedContractData) {
-    contract = getContract<
-      Transport,
-      Address,
-      Contract<TContractName>["abi"],
-      Chain,
-      Account,
-      PublicClient,
-      TWalletClient
-    >({
+    contract = getContract({
       address: deployedContractData.address,
-      abi: deployedContractData.abi as Contract<TContractName>["abi"],
-      walletClient: walletClient ? walletClient : undefined,
-      publicClient,
+      abi: deployedContractData.abi as Abi,
+      walletClient: walletClientInstance,
     });
   }
 

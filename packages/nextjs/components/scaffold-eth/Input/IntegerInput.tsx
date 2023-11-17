@@ -10,7 +10,6 @@ export const IntegerInput = ({
   onChange,
   name,
   placeholder,
-  disabled,
   variant = IntegerVariant.UINT256,
 }: IntegerInputProps) => {
   const [inputError, setInputError] = useState(false);
@@ -39,18 +38,13 @@ export const IntegerInput = ({
       placeholder={placeholder}
       error={inputError}
       onChange={onChange}
-      disabled={disabled}
       suffix={
         !inputError && (
           <div
             className="space-x-4 flex tooltip tooltip-top tooltip-secondary before:content-[attr(data-tip)] before:right-[-10px] before:left-auto before:transform-none"
             data-tip="Multiply by 10^18 (wei)"
           >
-            <button
-              className={`${disabled ? "cursor-not-allowed" : "cursor-pointer"} font-semibold px-4 text-accent`}
-              onClick={multiplyBy1e18}
-              disabled={disabled}
-            >
+            <button className="cursor-pointer font-semibold px-4 text-accent" onClick={multiplyBy1e18}>
               ∗
             </button>
           </div>

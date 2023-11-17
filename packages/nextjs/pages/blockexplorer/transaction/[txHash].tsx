@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { Transaction, TransactionReceipt, formatEther, formatUnits } from "viem";
-import { hardhat } from "viem/chains";
 import { usePublicClient } from "wagmi";
+import { hardhat } from "wagmi/chains";
 import { Address } from "~~/components/scaffold-eth";
 import { decodeTransactionData, getFunctionDetails, getTargetNetwork } from "~~/utils/scaffold-eth";
-import { replacer } from "~~/utils/scaffold-eth/common";
 
 const TransactionPage: NextPage = () => {
   const client = usePublicClient({ chainId: hardhat.id });
@@ -38,14 +37,14 @@ const TransactionPage: NextPage = () => {
   }, [client, txHash]);
 
   return (
-    <div className="container mx-auto mt-10 mb-20 px-10 md:px-0">
+    <div className="container mx-auto mt-10 mb-20">
       <button className="btn btn-sm btn-primary" onClick={() => router.back()}>
         Back
       </button>
       {transaction ? (
-        <div className="overflow-x-auto">
+        <div>
           <h2 className="text-3xl font-bold mb-4 text-center text-primary-content">Transaction Details</h2>{" "}
-          <table className="table rounded-lg bg-base-100 w-full shadow-lg md:table-lg table-md">
+          <table className="table w-full shadow-lg">
             <tbody>
               <tr>
                 <td>
@@ -119,20 +118,6 @@ const TransactionPage: NextPage = () => {
                 </td>
                 <td className="form-control">
                   <textarea readOnly value={transaction.input} className="p-0 textarea-primary bg-inherit h-[150px]" />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Logs:</strong>
-                </td>
-                <td>
-                  <ul>
-                    {receipt?.logs?.map((log, i) => (
-                      <li key={i}>
-                        <strong>Log {i} topics:</strong> {JSON.stringify(log.topics, replacer, 2)}
-                      </li>
-                    ))}
-                  </ul>
                 </td>
               </tr>
             </tbody>

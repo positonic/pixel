@@ -14,4 +14,5 @@ interface TransactionReceipts {
 export interface TransactionsTableProps {
   blocks: Block[];
   transactionReceipts: TransactionReceipts;
+  isLoading: boolean;
 }

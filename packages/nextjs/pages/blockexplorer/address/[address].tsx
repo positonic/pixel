@@ -4,7 +4,7 @@ import fs from "fs";
 import { GetServerSideProps } from "next";
 import path from "path";
 import { createPublicClient, http } from "viem";
-import { hardhat } from "viem/chains";
+import { hardhat } from "wagmi/chains";
 import {
   AddressCodeTab,
   AddressLogsTab,
@@ -13,7 +13,7 @@ import {
   TransactionsTable,
 } from "~~/components/blockexplorer/";
 import { Address, Balance } from "~~/components/scaffold-eth";
-import deployedContracts from "~~/contracts/deployedContracts";
+import deployedContracts from "~~/generated/deployedContracts";
 import { useFetchBlocks } from "~~/hooks/scaffold-eth";
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
@@ -34,7 +34,7 @@ const publicClient = createPublicClient({
 
 const AddressPage = ({ address, contractData }: PageProps) => {
   const router = useRouter();
-  const { blocks, transactionReceipts, currentPage, totalBlocks, setCurrentPage } = useFetchBlocks();
+  const { blocks, transactionReceipts, currentPage, totalBlocks, setCurrentPage, isLoading } = useFetchBlocks();
   const [activeTab, setActiveTab] = useState("transactions");
   const [isContract, setIsContract] = useState(false);
 
@@ -65,7 +65,7 @@ const AddressPage = ({ address, contractData }: PageProps) => {
       </div>
       <div className="col-span-5 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
         <div className="col-span-1 flex flex-col">
-          <div className="bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl px-6 lg:px-8 mb-6 space-y-1 py-4 overflow-x-auto">
+          <div className="bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl px-6 lg:px-8 mb-6 space-y-1 py-4">
             <div className="flex">
               <div className="flex flex-col gap-1">
                 <Address address={address} format="long" />
@@ -108,7 +108,7 @@ const AddressPage = ({ address, contractData }: PageProps) => {
       )}
       {activeTab === "transactions" && (
         <div className="pt-4">
-          <TransactionsTable blocks={filteredBlocks} transactionReceipts={transactionReceipts} />
+          <TransactionsTable blocks={filteredBlocks} transactionReceipts={transactionReceipts} isLoading={isLoading} />
           <PaginationButton
             currentPage={currentPage}
             totalItems={Number(totalBlocks)}
@@ -136,7 +136,6 @@ async function fetchByteCodeAndAssembly(buildInfoDirectory: string, contractPath
     const filePath = path.join(buildInfoDirectory, buildInfoFiles[i]);
 
     const buildInfo = JSON.parse(fs.readFileSync(filePath, "utf8"));
-
     if (buildInfo.output.contracts[contractPath]) {
       for (const contract in buildInfo.output.contracts[contractPath]) {
         bytecode = buildInfo.output.contracts[contractPath][contract].evm.bytecode.object;
@@ -159,31 +158,19 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const chainId = hardhat.id;
   let contractPath = "";
 
-  const buildInfoDirectory = path.join(
-    __dirname,
-    "..",
-    "..",
-    "..",
-    "..",
-    "..",
-    "..",
-    "hardhat",
-    "artifacts",
-    "build-info",
-  );
+  const buildInfoDirectory = path.join(__dirname, "..", "..", "..", "..", "..", "..", "foundry", "out", "build-info");
 
   if (!fs.existsSync(buildInfoDirectory)) {
     throw new Error(`Directory ${buildInfoDirectory} not found.`);
   }
 
-  const deployedContractsOnChain = contracts ? contracts[chainId] : {};
+  const deployedContractsOnChain = contracts ? contracts[chainId][0].contracts : {};
   for (const [contractName, contractInfo] of Object.entries(deployedContractsOnChain)) {
     if (contractInfo.address.toLowerCase() === address) {
       contractPath = `contracts/${contractName}.sol`;
       break;
     }
   }
-
   if (!contractPath) {
     // No contract found at this address
     return { props: { address, contractData: null } };
