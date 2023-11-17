@@ -1,9 +1,45 @@
 import type { NextPage } from "next";
+import { useAccount } from "wagmi";
+import { LoadingComponent } from "~~/components/LoadingComponent";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { ContractData } from "~~/components/example-ui/ContractData";
-import { ContractInteraction } from "~~/components/example-ui/ContractInteraction";
+import Chat from "~~/components/chat";
+import { usePush } from "~~/context/push/hooks/usePush";
 
-const Chat: NextPage = () => {
+const ChatPage: NextPage = () => {
+  const { address } = useAccount();
+
+  const { userInitialized } = usePush();
+
+  if (!address) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "50vh",
+        }}
+      >
+        <span>Please connect wallet</span>
+      </div>
+    );
+  }
+
+  if (!userInitialized) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "50vh",
+        }}
+      >
+        <LoadingComponent />
+      </div>
+    );
+  }
+
   return (
     <>
       <MetaHeader title="Chat" description="">
@@ -11,12 +47,11 @@ const Chat: NextPage = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </MetaHeader>
-      <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">
-        <ContractInteraction />
-        <ContractData />
+      <div>
+        <Chat />
       </div>
     </>
   );
 };
 
-export default Chat;
+export default ChatPage;
