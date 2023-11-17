@@ -1,8 +1,19 @@
 import { ChatList } from "./ChatList";
+import { IFeeds } from "@pushprotocol/restapi";
 import { useChatState } from "~~/services/store/store";
 
 export default function Chat() {
-  const { selectedAddress } = useChatState();
+  const { setSelectedChat, setSelectedAddress, selectedAddress } = useChatState();
+
+  const onChatSelect = (chat: IFeeds) => {
+    const groupInfo = chat?.groupInformation;
+    if (groupInfo) {
+      setSelectedAddress(groupInfo.chatId);
+    } else {
+      setSelectedAddress(chat?.did?.substring(7) || "");
+    }
+    setSelectedChat(chat);
+  };
 
   return (
     <div className="container mx-auto shadow-lg rounded-lg md:flex md:flex-col mt-10">
@@ -24,7 +35,7 @@ export default function Chat() {
           }`}
         >
           {/* chat list */}
-          <ChatList />
+          <ChatList onSelect={onChatSelect} />
         </div>
         {/* messages */}
       </div>

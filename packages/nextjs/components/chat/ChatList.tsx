@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { Chats } from "./Chats";
+import { Requests } from "./Requests";
+import { IFeeds } from "@pushprotocol/restapi";
 import { isAddress } from "viem";
 import { fetchEnsAddress } from "wagmi/actions";
 import { useChat } from "~~/hooks/push/useChat";
 import { useChatState } from "~~/services/store/store";
 
-export const ChatList = () => {
+type ChatListProps = {
+  onSelect: (chat: IFeeds) => void;
+};
+
+export const ChatList: FC<ChatListProps> = ({ onSelect }) => {
   const { activeTab, setActiveTab, selectedAddress, setSelectedAddress } = useChatState();
-  const { requests, fetchChats, fetchRequests } = useChat();
+  const { chats, requests, chatFetching, requestsLoading, fetchChats, fetchRequests } = useChat();
 
   const [searchAddress, setSearchAddress] = useState("");
 
@@ -81,6 +88,11 @@ export const ChatList = () => {
           </div>
         )}
       </div>
+      {activeTab === "chats" ? (
+        <Chats loading={chatFetching} chats={chats} onSelect={onSelect} />
+      ) : (
+        <Requests loading={requestsLoading} requests={requests} />
+      )}
     </div>
   );
 };
