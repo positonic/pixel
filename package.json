@@ -1,5 +1,5 @@
 {
-  "name": "se-2",
+  "name": "pixel",
   "version": "0.0.1",
   "private": true,
   "workspaces": {
@@ -9,24 +9,24 @@
     ]
   },
   "scripts": {
-    "account": "yarn workspace @se-2/foundry account",
-    "fork": "yarn workspace @se-2/foundry fork",
-    "verify": "yarn workspace @se-2/foundry verify",
-    "compile": "yarn workspace @se-2/foundry compile",
-    "chain": "yarn workspace @se-2/foundry chain",
-    "deploy": "yarn workspace @se-2/foundry deploy",
-    "deploy:verify": "yarn workspace @se-2/foundry deploy:verify",
-    "foundry:lint": "yarn workspace @se-2/foundry lint",
-    "foundry:test": "yarn workspace @se-2/foundry test",
-    "generate": "yarn workspace @se-2/foundry generate",
-    "start": "yarn workspace @se-2/nextjs dev",
-    "next:lint": "yarn workspace @se-2/nextjs lint",
-    "next:format": "yarn workspace @se-2/nextjs format",
-    "next:check-types": "yarn workspace @se-2/nextjs check-types",
+    "account": "yarn workspace @pixel/foundry account",
+    "fork": "yarn workspace @pixel/foundry fork",
+    "verify": "yarn workspace @pixel/foundry verify",
+    "compile": "yarn workspace @pixel/foundry compile",
+    "chain": "yarn workspace @pixel/foundry chain",
+    "deploy": "yarn workspace @pixel/foundry deploy",
+    "deploy:verify": "yarn workspace @pixel/foundry deploy:verify",
+    "foundry:lint": "yarn workspace @pixel/foundry lint",
+    "foundry:test": "yarn workspace @pixel/foundry test",
+    "generate": "yarn workspace @pixel/foundry generate",
+    "start": "yarn workspace @pixel/nextjs dev",
+    "next:lint": "yarn workspace @pixel/nextjs lint",
+    "next:format": "yarn workspace @pixel/nextjs format",
+    "next:check-types": "yarn workspace @pixel/nextjs check-types",
     "postinstall": "husky install",
     "precommit": "lint-staged",
-    "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
+    "vercel": "yarn workspace @pixel/nextjs vercel",
+    "vercel:yolo": "yarn workspace @pixel/nextjs vercel:yolo"
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
