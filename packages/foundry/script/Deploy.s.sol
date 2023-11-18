@@ -84,7 +84,6 @@ contract DeployScript is ScaffoldETHDeploy {
                 vm.toString(address(apes))
             )
         );
-        // vibes.vouch(0xB03F0121b8F2BB26b1c882cAB693D645230F385D);
 
         apes.mint(0xB03F0121b8F2BB26b1c882cAB693D645230F385D);
         apes.mint(0xB03F0121b8F2BB26b1c882cAB693D645230F385D);

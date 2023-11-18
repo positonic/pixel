@@ -1,10 +1,9 @@
-import React, { useCallback, useRef, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { ChatBubbleLeftIcon, CubeIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
-import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
   const router = useRouter();
@@ -23,29 +22,75 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
   );
 };
 
+const bottomNavMap: Record<string, number> = {
+  "/profile": 0,
+  "/chat": 1,
+  "/map": 2,
+};
+
+const BottomNavigation = () => {
+  const { pathname } = useRouter();
+
+  const activeIndex = bottomNavMap[pathname];
+
+  return (
+    <div className="btm-nav bg-base-200">
+      <Link href="/profile" className={activeIndex === 0 ? "active bg-secondary" : ""}>
+        <UserCircleIcon className="h-5 w-5" />
+        <span className="btm-nav-label">Profile</span>
+      </Link>
+      <Link href="/collections" className={activeIndex === 2 ? "active bg-secondary" : ""}>
+        <CubeIcon className="h-5 w-5" />
+        <span className="btm-nav-label">Collections</span>
+      </Link>
+      <Link href="/chat" className={activeIndex === 1 ? "active bg-secondary" : ""}>
+        <ChatBubbleLeftIcon className="h-5 w-5" />
+        <span className="btm-nav-label">Chat</span>
+      </Link>
+    </div>
+  );
+};
+
+export default BottomNavigation;
+
 /**
  * Site header
  */
 export const Header = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const burgerMenuRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(
-    burgerMenuRef,
-    useCallback(() => setIsDrawerOpen(false), []),
-  );
+  // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // const burgerMenuRef = useRef<HTMLDivElement>(null);
+  // useOutsideClick(
+  //   burgerMenuRef,
+  //   useCallback(() => setIsDrawerOpen(false), []),
+  // );
 
   const navLinks = (
     <>
       <li>
-        <NavLink href="/">Home</NavLink>
+        <NavLink href="/profile">
+          <UserCircleIcon className="h-4 w-4" />
+          Profile
+        </NavLink>
+      </li>
+      <li>
+        <NavLink href="/collections">
+          <CubeIcon className="h-4 w-4" />
+          Collections
+        </NavLink>
+      </li>
+      <li>
+        <NavLink href="/chat">
+          <ChatBubbleLeftIcon className="h-4 w-4" />
+          Chat
+        </NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
-      <div className="navbar-start w-auto lg:w-1/2">
-        <div className="lg:hidden dropdown" ref={burgerMenuRef}>
+    <div className="sticky lg:static top-0 navbar bg-base-200 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
+      <div className="navbar-start w-auto lg:w-1/2 ">
+        {/* <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <label
             tabIndex={0}
             className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
@@ -66,16 +111,19 @@ export const Header = () => {
               {navLinks}
             </ul>
           )}
+        </div> */}
+        <div className="md:hidden block">
+          <BottomNavigation />
         </div>
-        <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6">
+        <Link href="/" passHref className=" flex items-center gap-2 ml-2 mr-3 shrink-0 min-w-80">
           <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/brand/pixel.svg" />
+            <Image alt="Pixel" className="cursor-pointer" fill src="/brand/pixel.svg" />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col ">
             <span className="font-bold leading-tight">Pixel</span>
           </div>
         </Link>
-        <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>
+        <ul className="hidden md:flex md:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>
       </div>
       <div className="navbar-end flex-grow mr-4">
         <RainbowKitCustomConnectButton />
