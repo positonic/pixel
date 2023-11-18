@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     YourContract: {
-      address: "0x22753E4264FDDc6181dc7cce468904A80a363E44",
+      address: "0xfcDB4564c18A9134002b9771816092C9693622e3",
       abi: [
         {
           inputs: [
@@ -149,7 +149,7 @@ const deployedContracts = {
       ],
     },
     WETH9: {
-      address: "0xE3011A37A904aB90C8881a99BD1F6E21401f1522",
+      address: "0x927b167526bAbB9be047421db732C663a0b77B11",
       abi: [
         {
           anonymous: false,
@@ -438,7 +438,7 @@ const deployedContracts = {
       ],
     },
     MockRoyaltyEngineV1: {
-      address: "0x1f10F3Ba7ACB61b2F50B9d6DdCf91a6f787C0E82",
+      address: "0x32EEce76C2C2e8758584A83Ee2F522D4788feA0f",
       abi: [
         {
           inputs: [
@@ -519,7 +519,7 @@ const deployedContracts = {
       ],
     },
     Nix: {
-      address: "0x457cCf29090fe5A24c19c1bc95F492168C0EaFdb",
+      address: "0x01c1DeF3b91672704716159C9041Aeca392DdFfb",
       abi: [
         {
           inputs: [
@@ -957,9 +957,9 @@ const deployedContracts = {
               type: "uint256",
             },
             {
-              internalType: "address",
-              name: "integrator",
-              type: "address",
+              internalType: "string",
+              name: "chatId",
+              type: "string",
             },
           ],
           name: "addOrder",
@@ -971,6 +971,30 @@ const deployedContracts = {
             },
           ],
           stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "chatIdOrders",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -1095,6 +1119,16 @@ const deployedContracts = {
                   internalType: "uint64",
                   name: "royaltyFactor",
                   type: "uint64",
+                },
+                {
+                  internalType: "bool",
+                  name: "executed",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "chatId",
+                  type: "string",
                 },
               ],
               internalType: "struct Nix.Order",
@@ -1430,7 +1464,7 @@ const deployedContracts = {
       ],
     },
     Pixel: {
-      address: "0x525C7063E7C20997BaaE9bDa922159152D0e8417",
+      address: "0x02b0B4EFd909240FCB2Eb5FAe060dC60D112E3a4",
       abi: [
         {
           inputs: [],
@@ -1728,7 +1762,7 @@ const deployedContracts = {
       ],
     },
     NixHelper: {
-      address: "0x3347B4d90ebe72BeFb30444C9966B2B990aE9FcB",
+      address: "0x638A246F0Ec8883eF68280293FFE8Cfbabe61B44",
       abi: [
         {
           inputs: [
@@ -1942,6 +1976,16 @@ const deployedContracts = {
                   name: "royaltyFactor",
                   type: "uint64",
                 },
+                {
+                  internalType: "bool",
+                  name: "executed",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "chatId",
+                  type: "string",
+                },
               ],
               internalType: "struct Nix.Order",
               name: "order",
@@ -1975,7 +2019,7 @@ const deployedContracts = {
       ],
     },
     BoredApes: {
-      address: "0x3155755b79aA083bd953911C92705B7aA82a18F9",
+      address: "0x6C2d83262fF84cBaDb3e416D527403135D757892",
       abi: [
         {
           inputs: [],
@@ -2704,7 +2748,7 @@ const deployedContracts = {
       ],
     },
     Nouns: {
-      address: "0xab16A69A5a8c12C732e0DEFF4BE56A70bb64c926",
+      address: "0x0ed64d01D0B4B655E410EF1441dD677B695639E7",
       abi: [
         {
           inputs: [],
@@ -3433,7 +3477,7 @@ const deployedContracts = {
       ],
     },
     NFTHelper: {
-      address: "0x38a024C0b412B9d1db8BC398140D00F5Af3093D4",
+      address: "0xde2Bd2ffEA002b8E84ADeA96e5976aF664115E2c",
       abi: [
         {
           inputs: [
