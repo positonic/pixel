@@ -315,6 +315,7 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
         handleTips(integrator);
     }
 
+
     /// @dev Taker execute orders.
     /// @param tokenList List of ERC-721 contract addresses - one address for each order
     /// @param orderIndexes List of order indices - one orderIndex for each order

@@ -87,3 +87,43 @@ export const useGetOrders = (tokenAddress: string, orderIndices: bigint[]): Orde
     data: formattedData,
   };
 };
+
+export interface SingleOrderData {
+  maker: string;
+  taker: string;
+  buyOrSell: number;
+  anyOrAll: number;
+  tokenIdsKey: string;
+  price: number;
+  expiry: number;
+  tradeCount: number;
+  tradeMax: number;
+  royaltyFactor: number;
+}
+
+export const useGetOrder = (tokenAddress: string, orderIndex: bigint): SingleOrderData | null => {
+  const { data: result } = useScaffoldContractRead({
+    contractName: "Nix", // Update with your contract name
+    functionName: "getOrder",
+    args: [tokenAddress, orderIndex],
+  });
+
+  if (!result) {
+    return null;
+  }
+
+  const order: SingleOrderData = {
+    maker: result.maker.toString(),
+    taker: result.taker.toString(),
+    buyOrSell: Number(result.buyOrSell),
+    anyOrAll: Number(result.anyOrAll),
+    tokenIdsKey: result.tokenIdsKey.toString(),
+    price: Number(result.price),
+    expiry: Number(result.expiry),
+    tradeCount: Number(result.tradeCount),
+    tradeMax: Number(result.tradeMax),
+    royaltyFactor: Number(result.royaltyFactor),
+  };
+
+  return order;
+};
