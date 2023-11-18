@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     YourContract: {
-      address: "0xab16A69A5a8c12C732e0DEFF4BE56A70bb64c926",
+      address: "0x22753E4264FDDc6181dc7cce468904A80a363E44",
       abi: [
         {
           inputs: [
@@ -1728,7 +1728,7 @@ const deployedContracts = {
       ],
     },
     NixHelper: {
-      address: "0x38a024C0b412B9d1db8BC398140D00F5Af3093D4",
+      address: "0x3347B4d90ebe72BeFb30444C9966B2B990aE9FcB",
       abi: [
         {
           inputs: [
@@ -1975,7 +1975,7 @@ const deployedContracts = {
       ],
     },
     BoredApes: {
-      address: "0x5fc748f1FEb28d7b76fa1c6B07D8ba2d5535177c",
+      address: "0x3155755b79aA083bd953911C92705B7aA82a18F9",
       abi: [
         {
           inputs: [],
@@ -2704,7 +2704,7 @@ const deployedContracts = {
       ],
     },
     Nouns: {
-      address: "0x8A93d247134d91e0de6f96547cB0204e5BE8e5D8",
+      address: "0xab16A69A5a8c12C732e0DEFF4BE56A70bb64c926",
       abi: [
         {
           inputs: [],
@@ -3433,7 +3433,7 @@ const deployedContracts = {
       ],
     },
     NFTHelper: {
-      address: "0x6F6f570F45833E249e27022648a26F4076F48f78",
+      address: "0x38a024C0b412B9d1db8BC398140D00F5Af3093D4",
       abi: [
         {
           inputs: [

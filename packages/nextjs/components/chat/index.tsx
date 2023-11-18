@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { ActionModal } from "../modals/ActionModal";
+import { ListNFTsModal } from "../modals/ListNFTsModal";
 import { NFTListModal } from "../modals/NFTListModal";
 import { ChatList } from "./ChatList";
 import { Messages } from "./messages/Messages";
@@ -14,6 +15,7 @@ export default function Chat() {
   const { address } = useAccount();
   const { user } = usePush();
   const nftListDialogRef = useRef<HTMLDialogElement>(null);
+  const listNftsDialogRef = useRef<HTMLDialogElement>(null);
 
   const onChatSelect = (chat: IFeeds) => {
     const groupInfo = chat?.groupInformation;
@@ -44,7 +46,18 @@ export default function Chat() {
         }}
         loading={false}
       />
-      <NFTListModal dialogRef={nftListDialogRef} />
+      <NFTListModal
+        dialogRef={nftListDialogRef}
+        onClick={() => {
+          listNftsDialogRef.current?.showModal();
+        }}
+      />
+      <ListNFTsModal
+        dialogRef={listNftsDialogRef}
+        onClick={(nftsForSale: number[]) => {
+          console.log("nftsForSale:", nftsForSale);
+        }}
+      />
 
       <div
         className="flex flex-col md:flex-row justify-between bg-base-300"

@@ -1,9 +1,27 @@
-import { RefObject } from "react";
+import { RefObject, useState } from "react";
 import { Avatar, Button, Checkbox, Mask, Modal, Table } from "react-daisyui";
-import { useGetNfts } from "~~/hooks/useGetNfts";
+import { NFTData, useGetNfts } from "~~/hooks/useGetNfts";
+import { useUserNFTsState } from "~~/services/store/store";
 
-export const NFTListModal = ({ dialogRef }: { dialogRef: RefObject<HTMLDialogElement> }) => {
+export const NFTListModal = ({
+  dialogRef,
+  onClick,
+}: {
+  dialogRef: RefObject<HTMLDialogElement>;
+  onClick: () => void;
+}) => {
   const { loading, nfts } = useGetNfts();
+  const [selectedNfts, setSelectedNfts] = useState<NFTData[]>([]);
+
+  const { setNFTsForSale } = useUserNFTsState();
+
+  const handleSelect = (e: any, token: NFTData) => {
+    if (e.target.checked) {
+      setSelectedNfts(prev => [...prev, token]);
+    } else {
+      setSelectedNfts(prev => prev.filter((id: NFTData) => id !== token));
+    }
+  };
 
   return (
     <Modal className="max-w-xl" ref={dialogRef}>
@@ -19,7 +37,7 @@ export const NFTListModal = ({ dialogRef }: { dialogRef: RefObject<HTMLDialogEle
             <Table.Body>
               {nfts?.map((nft, i) => (
                 <Table.Row key={i}>
-                  <Checkbox />
+                  <Checkbox onChange={e => handleSelect(e, nft)} />
                   <div className="flex items-center space-x-3 truncate">
                     <Avatar
                       src={nft.image}
@@ -43,7 +61,14 @@ export const NFTListModal = ({ dialogRef }: { dialogRef: RefObject<HTMLDialogEle
       </Modal.Body>
       <Modal.Actions>
         <form method="dialog">
-          <Button className="btn bg-black btn-primary btn-outline mt-2 w-full" disabled={loading}>
+          <Button
+            className="btn bg-black btn-primary btn-outline mt-2 w-full"
+            disabled={loading}
+            onClick={() => {
+              setNFTsForSale(selectedNfts);
+              onClick();
+            }}
+          >
             Next
           </Button>
         </form>

@@ -29,6 +29,8 @@ type ChatState = {
 type UserNFTsState = {
   nfts: NFTData[];
   setNFTs: (nfts: NFTData[]) => void;
+  nftsForSale: NFTData[];
+  setNFTsForSale: (nfts: NFTData[]) => void;
 };
 
 export const useGlobalState = create<TGlobalState>(set => ({
@@ -49,4 +51,8 @@ export const useChatState = create<ChatState>(set => ({
 export const useUserNFTsState = create<UserNFTsState>(set => ({
   nfts: [],
   setNFTs: (newValue: NFTData[]): void => set(() => ({ nfts: newValue })),
+  nftsForSale: [],
+  setNFTsForSale(nfts) {
+    set(() => ({ nftsForSale: nfts }));
+  },
 }));
