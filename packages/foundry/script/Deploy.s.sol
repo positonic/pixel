@@ -8,6 +8,7 @@ import "../contracts/utils/WETH9.sol";
 import "../contracts/nix/Nix.sol";
 import "../contracts/tokens/BoredApes.sol";
 import "../contracts/tokens/Nouns.sol";
+import "../contracts/tokens/NFTHelper.sol";
 
 import "./DeployHelpers.s.sol";
 
@@ -62,6 +63,15 @@ contract DeployScript is ScaffoldETHDeploy {
                 vm.toString(address(weth))
             )
         );
+
+        NFTHelper nftHelper = new NFTHelper();
+        console.logString(
+            string.concat(
+                "NFTHelper deployed at: ",
+                vm.toString(address(nftHelper))
+            )
+        );
+
         MockRoyaltyEngineV1 royaltyEngine = new MockRoyaltyEngineV1( royalty1,  royalty2);
         console.logString(
             string.concat(
