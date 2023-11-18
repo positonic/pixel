@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
+import { formatEther } from "viem";
 import { SingleOrderData, useGetOrder } from "~~/hooks/pixel";
+import { formatNumberCompact } from "~~/utils/bignumber";
 
 function ViewOrder({ address, token, orderIndex }: { address: string; token: string; orderIndex: string }) {
   const router = useRouter();
@@ -8,25 +10,49 @@ function ViewOrder({ address, token, orderIndex }: { address: string; token: str
   if (!order) {
     return <div>Loading...</div>;
   }
+  let orderString = "";
+  if (order.buyOrSell) {
+    orderString = "Sell";
+  } else {
+    orderString = "Buy";
+  }
   return (
-    <section className="flex flex-col gap-4 mb-4 max-w-md mx-auto px-5">
+    <div>
       <p>Address: {address}</p>
-      <p>Token: {token}</p>
-      <p>Maker: {order.maker}</p>
-      <p>Taker: {order.taker}</p>
-      <p>buyOrSell: {order.buyOrSell}</p>
-      <p>anyOrAll: {order.anyOrAll}</p>
-      <p>price: {order.price}</p>
-      <p>expiry: {order.expiry}</p>
-      <p>tradeCount: {order.tradeCount}</p>
-      <p>Price: {order.price}</p>
-      <button
-        className="btn btn-primary rounded-full capitalize font-normal mx-auto custom-button "
-        onClick={() => router.push("/offer")}
-      >
-        ACCEPT OFFER
-      </button>
-    </section>
+      <p>Offer to {orderString}:</p>
+
+      {/* <p>Token: {token}</p>
+    <p>Maker: {order.maker}</p>
+    <p>Taker: {order.taker}</p>
+    <p>Address: {address}</p> */}
+      {/* <p>anyOrAll: {order.anyOrAll}</p> */}
+
+      <div className="flex w-full">
+        <div className="grid flex-grow card bg-base-300 rounded-box place-items-center">
+          <p>expiry: {order.expiry}</p>
+          <p>tradeCount: {order.tradeCount}</p>
+        </div>
+        <div className="divider divider-horizontal">FOR</div>
+        <div className="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center">
+          {formatNumberCompact(formatEther(BigInt(order.price)), "4")} ETH
+        </div>
+      </div>
+      <div className="flex w-full">
+        <button
+          className="btn mt-10 btn-primary rounded-full capitalize font-normal  custom-button "
+          onClick={() => router.push("/offer")}
+        >
+          REJECT OFFER
+        </button>
+
+        <button
+          className="btn mt-10 btn-primary rounded-full capitalize font-normal  custom-button "
+          onClick={() => router.push("/offer")}
+        >
+          ACCEPT OFFER
+        </button>
+      </div>
+    </div>
   );
 }
 
