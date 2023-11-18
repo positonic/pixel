@@ -35,6 +35,12 @@ function GetOffers({ address }: { address: string }) {
       >
         MAKE OFFER
       </button>
+      <button
+        className="btn btn-primary rounded-full capitalize font-normal  mx-auto custom-button "
+        onClick={() => router.push("/order/0xBEc49fA140aCaA83533fB00A2BB19bDdd0290f25/0")}
+      >
+        DEMO OFFER
+      </button>
     </section>
   );
 }
