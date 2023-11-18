@@ -1,9 +1,7 @@
 import { MessageType } from "@pushprotocol/restapi/src/lib/constants";
 
 export enum TransactionType {
-  SEND = "SEND",
-  REQUEST = "REQUEST",
-  DIRECT_SEND = "DIRECT_SEND",
+  NFT_SWAP = "NFT_SWAP",
 }
 
 export type Message = {
