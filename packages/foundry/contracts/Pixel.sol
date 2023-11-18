@@ -10,6 +10,7 @@ contract Pixel  {
     /// @notice Vouches for all the members
     bytes32[] public vouches;
     mapping (bytes32  => address) internal vouchSender;
+    mapping (bytes32  => address) internal vouchRecipient;
 
     /// @notice Mapping from user => vouch hash.
     mapping (address => bytes32[]) public vouchesReceived;
@@ -61,6 +62,7 @@ contract Pixel  {
         bytes32 vouchId = generateVouchHash(msg.sender, recipient);
         vouchesSent[msg.sender].push(vouchId);
         vouchesReceived[recipient].push(vouchId);
+        vouchRecipient[vouchId] = recipient;
         _vouch(msg.sender, vouchId);
     }
 
@@ -78,6 +80,10 @@ contract Pixel  {
         return vouchesSent[user].length;
     }
 
+    function doesVouch(address sender, address recipient) public view returns (bool) {
+        bytes32 vouchId = generateVouchHash(sender, recipient);
+        return vouchSender[vouchId] == sender;
+    }
 
     // Trust
     function getTrustScore(address user, address vouched) public view returns (uint256) {
@@ -85,12 +91,12 @@ contract Pixel  {
         if (memberLength == 0) return 0;
         uint256 score = 0;
         bytes32 vouchId;
-        address vouchMember;
+        address vouchReceiver;
 
         for (uint256 i = 0; i < memberLength; i++) {
-            vouchMember = vouchesSent[user][i];
-            vouchId = generateVouchHash(vouchMember, vouched);
-            if ( vouchSender[vouchId] == vouchMember ) {
+            vouchReceiver = vouchRecipient[vouchesSent[user][i]];
+            vouchId = generateVouchHash(vouchReceiver, vouched);
+            if (vouchSender[vouchId] == vouchReceiver) {
                 score++;
             }
         }

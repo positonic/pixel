@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     YourContract: {
-      address: "0x4C2F7092C2aE51D986bEFEe378e50BD4dB99C901",
+      address: "0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9",
       abi: [
         {
           inputs: [
@@ -149,7 +149,7 @@ const deployedContracts = {
       ],
     },
     WETH9: {
-      address: "0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9",
+      address: "0x49fd2BE640DB2910c2fAb69bB8531Ab6E76127ff",
       abi: [
         {
           anonymous: false,
@@ -438,7 +438,7 @@ const deployedContracts = {
       ],
     },
     MockRoyaltyEngineV1: {
-      address: "0x49fd2BE640DB2910c2fAb69bB8531Ab6E76127ff",
+      address: "0x4631BCAbD6dF18D94796344963cB60d44a4136b6",
       abi: [
         {
           inputs: [
@@ -519,7 +519,7 @@ const deployedContracts = {
       ],
     },
     Nix: {
-      address: "0x4631BCAbD6dF18D94796344963cB60d44a4136b6",
+      address: "0x86A2EE8FAf9A840F7a2c64CA3d51209F9A02081D",
       abi: [
         {
           inputs: [
@@ -1430,7 +1430,7 @@ const deployedContracts = {
       ],
     },
     NixHelper: {
-      address: "0x4EE6eCAD1c2Dae9f525404De8555724e3c35d07B",
+      address: "0xA4899D35897033b927acFCf422bc745916139776",
       abi: [
         {
           inputs: [
@@ -1677,7 +1677,7 @@ const deployedContracts = {
       ],
     },
     BoredApes: {
-      address: "0x86A2EE8FAf9A840F7a2c64CA3d51209F9A02081D",
+      address: "0xf953b3A269d80e3eB0F2947630Da976B896A8C5b",
       abi: [
         {
           inputs: [],
@@ -2406,7 +2406,7 @@ const deployedContracts = {
       ],
     },
     Nouns: {
-      address: "0x5c74c94173F05dA1720953407cbb920F3DF9f887",
+      address: "0xe8D2A1E88c91DCd5433208d4152Cc4F399a7e91d",
       abi: [
         {
           inputs: [],
@@ -3135,7 +3135,7 @@ const deployedContracts = {
       ],
     },
     NFTHelper: {
-      address: "0x4b6aB5F819A515382B0dEB6935D793817bB4af28",
+      address: "0xD5ac451B0c50B9476107823Af206eD814a2e2580",
       abi: [
         {
           inputs: [
