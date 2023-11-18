@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     YourContract: {
-      address: "0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9",
+      address: "0xab16A69A5a8c12C732e0DEFF4BE56A70bb64c926",
       abi: [
         {
           inputs: [
@@ -149,7 +149,7 @@ const deployedContracts = {
       ],
     },
     WETH9: {
-      address: "0x49fd2BE640DB2910c2fAb69bB8531Ab6E76127ff",
+      address: "0xE3011A37A904aB90C8881a99BD1F6E21401f1522",
       abi: [
         {
           anonymous: false,
@@ -438,7 +438,7 @@ const deployedContracts = {
       ],
     },
     MockRoyaltyEngineV1: {
-      address: "0x4631BCAbD6dF18D94796344963cB60d44a4136b6",
+      address: "0x1f10F3Ba7ACB61b2F50B9d6DdCf91a6f787C0E82",
       abi: [
         {
           inputs: [
@@ -519,7 +519,7 @@ const deployedContracts = {
       ],
     },
     Nix: {
-      address: "0x86A2EE8FAf9A840F7a2c64CA3d51209F9A02081D",
+      address: "0x457cCf29090fe5A24c19c1bc95F492168C0EaFdb",
       abi: [
         {
           inputs: [
@@ -1429,8 +1429,306 @@ const deployedContracts = {
         },
       ],
     },
+    Pixel: {
+      address: "0x525C7063E7C20997BaaE9bDa922159152D0e8417",
+      abi: [
+        {
+          inputs: [],
+          name: "DOMAIN_HASH",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "coldWallets",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+          ],
+          name: "doesVouch",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+          ],
+          name: "generateVouchHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "vouchId",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "vouched",
+              type: "address",
+            },
+          ],
+          name: "getTrustScore",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          name: "nameOwner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "userName",
+              type: "string",
+            },
+          ],
+          name: "register",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "coldWallet",
+              type: "address",
+            },
+          ],
+          name: "setColdWallet",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "unregister",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "userNames",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+          ],
+          name: "vouch",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "vouchReceivedCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "vouchSentCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "vouches",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "vouchesReceived",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "vouchesSent",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+    },
     NixHelper: {
-      address: "0xA4899D35897033b927acFCf422bc745916139776",
+      address: "0x38a024C0b412B9d1db8BC398140D00F5Af3093D4",
       abi: [
         {
           inputs: [
@@ -1677,7 +1975,7 @@ const deployedContracts = {
       ],
     },
     BoredApes: {
-      address: "0xf953b3A269d80e3eB0F2947630Da976B896A8C5b",
+      address: "0x5fc748f1FEb28d7b76fa1c6B07D8ba2d5535177c",
       abi: [
         {
           inputs: [],
@@ -2406,7 +2704,7 @@ const deployedContracts = {
       ],
     },
     Nouns: {
-      address: "0xe8D2A1E88c91DCd5433208d4152Cc4F399a7e91d",
+      address: "0x8A93d247134d91e0de6f96547cB0204e5BE8e5D8",
       abi: [
         {
           inputs: [],
@@ -3135,7 +3433,7 @@ const deployedContracts = {
       ],
     },
     NFTHelper: {
-      address: "0xD5ac451B0c50B9476107823Af206eD814a2e2580",
+      address: "0x6F6f570F45833E249e27022648a26F4076F48f78",
       abi: [
         {
           inputs: [

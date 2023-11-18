@@ -7,6 +7,7 @@ import "../contracts/nix/MockRoyaltyEngineV1.sol";
 import "../contracts/utils/WETH9.sol";
 import "../contracts/nix/Nix.sol";
 import "../contracts/nix/NixHelper.sol";
+import "../contracts/Pixel.sol";
 
 import "../contracts/tokens/BoredApes.sol";
 import "../contracts/tokens/Nouns.sol";
@@ -21,6 +22,7 @@ contract DeployScript is ScaffoldETHDeploy {
     address public seller;
     address public royalty1;
     address public royalty2;
+    Pixel public pixel;
 
     function run() external {
         uint256 deployerPrivateKey = setupLocalhostEnv();
@@ -78,6 +80,13 @@ contract DeployScript is ScaffoldETHDeploy {
             string.concat(
                 "Nix deployed at: ",
                 vm.toString(address(nix))
+            )
+        );
+        Pixel pixel = new Pixel();
+        console.logString(
+            string.concat(
+                "Pixel deployed at: ",
+                vm.toString(address(pixel))
             )
         );
        NixHelper nixHelper = new NixHelper(nix);
