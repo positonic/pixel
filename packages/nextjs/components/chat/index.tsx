@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { ActionModal } from "../modals/ActionModal";
-import { ListNFTsModal } from "../modals/ListNFTsModal";
+// import { ListNFTsModal } from "../modals/ListNFTsModal";
 import { NFTListModal } from "../modals/NFTListModal";
 import { ChatList } from "./ChatList";
 import { Messages } from "./messages/Messages";
@@ -52,12 +52,12 @@ export default function Chat() {
           listNftsDialogRef.current?.showModal();
         }}
       />
-      <ListNFTsModal
+      {/* <ListNFTsModal
         dialogRef={listNftsDialogRef}
         onClick={(nftsForSale: number[]) => {
           console.log("nftsForSale:", nftsForSale);
         }}
-      />
+      /> */}
 
       <div
         className="flex flex-col md:flex-row justify-between bg-base-300"

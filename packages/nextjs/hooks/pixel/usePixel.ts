@@ -13,7 +13,7 @@ export const useGetUserName = (address: string): { userName: string } => {
   };
 };
 
-export const useColdWallet = (address: string): { coldWallet: string } => {
+export const useGetColdWallet = (address: string): { coldWallet: string } => {
   const { data: coldWallet } = useScaffoldContractRead({
     contractName: "Pixel",
     functionName: "coldWallets",

@@ -3066,6 +3066,7 @@ __metadata:
     "@types/cookie_js": ^1
     "@types/moment": ^2.13.0
     "@types/node": ^17.0.35
+    "@types/qrcode": ^1.5.5
     "@types/react": ^18.0.9
     "@types/react-blockies": ^1
     "@types/react-copy-to-clipboard": ^5.0.4
@@ -3075,6 +3076,7 @@ __metadata:
     autoprefixer: ^10.4.12
     axios: ^1.6.2
     blo: ^1.0.1
+    clipboard-copy: ^4.0.1
     cookie_js: ^1.4.2
     daisyui: ^3.5.1
     eslint: ^8.15.0
@@ -3088,6 +3090,7 @@ __metadata:
     nextjs-progressbar: ^0.0.16
     postcss: ^8.4.16
     prettier: ^2.8.4
+    qrcode: ^1.5.3
     qrcode.react: ^3.1.0
     react: ^18.2.0
     react-blockies: ^1.4.1
@@ -4040,6 +4043,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 0f780f31d983fa8d1bfbba1a130e8f7b07866d556807eccfb1d08d841c70644cdee8fc169ca752bdf17e99995e6155fcb6179079338ac8359294c781b95112b5
+  languageName: node
+  linkType: hard
+
+"@types/qrcode@npm:^1.5.5":
+  version: 1.5.5
+  resolution: "@types/qrcode@npm:1.5.5"
+  dependencies:
+    "@types/node": "*"
+  checksum: d92c1d3e77406bf13a03ec521b2ffb1ac99b2e6ea3a17cad670f2610f62e1293554c57e4074bb2fd4e9369f475f863b69e0ae8c543cb049c4a3c1b0c2d92522a
   languageName: node
   linkType: hard
 
@@ -6328,6 +6340,13 @@ __metadata:
   version: 0.0.1
   resolution: "client-only@npm:0.0.1"
   checksum: 0c16bf660dadb90610553c1d8946a7fdfb81d624adea073b8440b7d795d5b5b08beb3c950c6a2cf16279365a3265158a236876d92bce16423c485c322d7dfaf8
+  languageName: node
+  linkType: hard
+
+"clipboard-copy@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "clipboard-copy@npm:4.0.1"
+  checksum: 530a09de80dfd0536793fdefb6559a2dfb6c2706b027c41c672a0f18debafd420e69111224f3265555afcd73f9cd97517dcaf494aa25996a58a8f550a3426080
   languageName: node
   linkType: hard
 
