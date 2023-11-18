@@ -16,7 +16,7 @@
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
     "@heroicons/react": "^2.0.11",
-    "@pushprotocol/restapi": "^1.4.38",
+    "@pushprotocol/restapi": "^1.4.32",
     "@rainbow-me/rainbowkit": "1.1.2",
     "@types/moment": "^2.13.0",
     "@uniswap/sdk-core": "^4.0.1",

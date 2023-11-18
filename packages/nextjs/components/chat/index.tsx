@@ -1,9 +1,15 @@
 import { ChatList } from "./ChatList";
+import { Messages } from "./messages/Messages";
 import { IFeeds } from "@pushprotocol/restapi";
+import { useAccount } from "wagmi";
+import { usePush } from "~~/context/push/hooks/usePush";
 import { useChatState } from "~~/services/store/store";
 
 export default function Chat() {
   const { setSelectedChat, setSelectedAddress, selectedAddress } = useChatState();
+
+  const { address } = useAccount();
+  const { user } = usePush();
 
   const onChatSelect = (chat: IFeeds) => {
     const groupInfo = chat?.groupInformation;
@@ -29,15 +35,23 @@ export default function Chat() {
           height: "70vh",
         }}
       >
+        {/* chat list */}
         <div
           className={`flex flex-col w-full md:w-2/5 border-r-2 border-base-100 overflow-y-auto ${
             selectedAddress && "hidden md:flex"
           }`}
         >
-          {/* chat list */}
           <ChatList onSelect={onChatSelect} />
         </div>
         {/* messages */}
+        <div
+          className={`flex flex-col w-full md:w-3/5 overflow-hidden min-h-full ${!selectedAddress && "hidden md:flex"}`}
+          style={{
+            maxHeight: "100vh", // This container should also fit within the viewport height
+          }}
+        >
+          <Messages user={user} address={address} />
+        </div>
       </div>
     </div>
   );

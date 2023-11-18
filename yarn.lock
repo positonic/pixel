@@ -3060,7 +3060,7 @@ __metadata:
   dependencies:
     "@ethersproject/providers": ^5.7.2
     "@heroicons/react": ^2.0.11
-    "@pushprotocol/restapi": ^1.4.38
+    "@pushprotocol/restapi": ^1.4.32
     "@rainbow-me/rainbowkit": 1.1.2
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/cookie_js": ^1
@@ -3128,7 +3128,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pushprotocol/restapi@npm:^1.4.38":
+"@pushprotocol/restapi@npm:^1.4.32":
   version: 1.4.38
   resolution: "@pushprotocol/restapi@npm:1.4.38"
   dependencies:
