@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     YourContract: {
-      address: "0x0355B7B8cb128fA5692729Ab3AAa199C1753f726",
+      address: "0x4C2F7092C2aE51D986bEFEe378e50BD4dB99C901",
       abi: [
         {
           inputs: [
@@ -149,7 +149,7 @@ const deployedContracts = {
       ],
     },
     WETH9: {
-      address: "0x202CCe504e04bEd6fC0521238dDf04Bc9E8E15aB",
+      address: "0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9",
       abi: [
         {
           anonymous: false,
@@ -438,7 +438,7 @@ const deployedContracts = {
       ],
     },
     MockRoyaltyEngineV1: {
-      address: "0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8",
+      address: "0x49fd2BE640DB2910c2fAb69bB8531Ab6E76127ff",
       abi: [
         {
           inputs: [
@@ -519,7 +519,7 @@ const deployedContracts = {
       ],
     },
     Nix: {
-      address: "0x172076E0166D1F9Cc711C77Adf8488051744980C",
+      address: "0x4631BCAbD6dF18D94796344963cB60d44a4136b6",
       abi: [
         {
           inputs: [
@@ -1677,7 +1677,7 @@ const deployedContracts = {
       ],
     },
     BoredApes: {
-      address: "0xBEc49fA140aCaA83533fB00A2BB19bDdd0290f25",
+      address: "0x86A2EE8FAf9A840F7a2c64CA3d51209F9A02081D",
       abi: [
         {
           inputs: [],
@@ -2406,7 +2406,7 @@ const deployedContracts = {
       ],
     },
     Nouns: {
-      address: "0x46b142DD1E924FAb83eCc3c08e4D46E82f005e0E",
+      address: "0x5c74c94173F05dA1720953407cbb920F3DF9f887",
       abi: [
         {
           inputs: [],
@@ -3130,6 +3130,73 @@ const deployedContracts = {
           name: "unpause",
           outputs: [],
           stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    NFTHelper: {
+      address: "0x4b6aB5F819A515382B0dEB6935D793817bB4af28",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "boredApe",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "nouns",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "getOwnedTokens",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "collection",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "tokenId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "tokenURI",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "symbol",
+                  type: "string",
+                },
+              ],
+              internalType: "struct NFTHelper.TokenData[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
       ],

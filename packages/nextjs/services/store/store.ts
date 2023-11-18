@@ -1,5 +1,6 @@
 import { IFeeds } from "@pushprotocol/restapi";
 import create from "zustand";
+import { NFTData } from "~~/hooks/useGetNfts";
 
 /**
  * Zustand Store
@@ -25,6 +26,11 @@ type ChatState = {
   setSelectedAddress: (address: string) => void;
 };
 
+type UserNFTsState = {
+  nfts: NFTData[];
+  setNFTs: (nfts: NFTData[]) => void;
+};
+
 export const useGlobalState = create<TGlobalState>(set => ({
   nativeCurrencyPrice: 0,
   setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
@@ -38,4 +44,9 @@ export const useChatState = create<ChatState>(set => ({
   unsetSelectedChat: (): void => set(() => ({ selectedChat: null })),
   selectedAddress: "",
   setSelectedAddress: (address: string) => set(() => ({ selectedAddress: address })),
+}));
+
+export const useUserNFTsState = create<UserNFTsState>(set => ({
+  nfts: [],
+  setNFTs: (newValue: NFTData[]): void => set(() => ({ nfts: newValue })),
 }));

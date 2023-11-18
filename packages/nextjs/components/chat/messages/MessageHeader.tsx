@@ -16,7 +16,7 @@ const MessageHeader: React.FC<MessageHeaderProps> = ({ avatarUrl, address, group
     onClose();
   };
   return (
-    <div className="bg-primary text-black p-2 mt-5 flex items-center rounded-3xl ml-4 mr-4">
+    <div className="bg-gray-200 text-black p-2 mt-5 flex items-center rounded-3xl ml-4 mr-4">
       <button onClick={handleClose}>
         <FiArrowLeft className="h-7 w-7 ml-2 sm:ml-0 mr-2" />
       </button>
