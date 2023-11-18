@@ -44,6 +44,8 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
         uint64 tradeCount;
         uint64 tradeMax;
         uint64 royaltyFactor;
+        bool executed;
+        string chatId;
     }
     struct Netting {
         address accounts;
@@ -74,6 +76,7 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
     address[] private tokensIndex;
     mapping(address => Token) private tokens;
     mapping(bytes32 => uint[]) tokenIdsData;
+    mapping(string => uint64[]) public chatIdOrders; // chatId => orderIndex
     Trade[] private trades;
 
     event TokenAdded(address indexed token, uint indexed tokenIndex);
@@ -183,8 +186,6 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
     /// @param anyOrAll (0) Any, (1) All
     /// @param expiry Expiry date. 0 = no expiry.
     /// @param tradeMax Must be 0 or 1 for All. Maximum number of NFTs for Any
-    /// @param royaltyFactor 0 to ROYALTYFACTOR_MAX, and will be applied as % when the maker sells the NFTs
-    /// @param integrator Address of integrator, that will receive a portion of ETH tips
     /// @return orderIndex The new order index
     function addOrder(
         address token,
@@ -195,8 +196,7 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
         uint price,
         uint expiry,
         uint tradeMax,
-        uint royaltyFactor,
-        address integrator
+        string memory chatId
     ) external payable reentrancyGuard returns (
         uint64 orderIndex
     ) {
@@ -208,9 +208,9 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
                 revert TradeMaxMustBeZeroOrOneForBuyOrSellAll();
             }
         }
-        if (royaltyFactor > ROYALTYFACTOR_MAX) {
-            revert RoyaltyOverMax(royaltyFactor, ROYALTYFACTOR_MAX);
-        }
+        // if (royaltyFactor > ROYALTYFACTOR_MAX) {
+        //     revert RoyaltyOverMax(royaltyFactor, ROYALTYFACTOR_MAX);
+        // }
         Token storage tokenInfo = getOrAddToken(token);
         bytes32 tokenIdsKey = getOrAddTokenIds(tokenIds);
         bytes32 orderKey = keccak256(abi.encodePacked(msg.sender, taker, token, tokenIdsKey));
@@ -228,9 +228,11 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
         order.price = price;
         order.expiry = uint64(expiry);
         order.tradeMax = uint64(tradeMax);
-        order.royaltyFactor = uint64(royaltyFactor);
+        // order.royaltyFactor = uint64(royaltyFactor);
+        order.chatId = chatId;
         emit OrderAdded(token, tokenInfo.ordersIndex.length - 1);
-        handleTips(integrator);
+        chatIdOrders[chatId].push(uint64(tokenInfo.ordersIndex.length - 1));
+
         return uint64(tokenInfo.ordersIndex.length - 1);
     }
 
@@ -394,6 +396,7 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
             if (order.tradeCount > order.tradeMax) {
                 revert OrderMaxxed(orderIndexes[i], order.tradeCount, order.tradeMax);
             }
+            order.executed = true;
         }
         if (trade.netting[msg.sender] != netAmount) {
             revert NetAmountMismatch(trade.netting[msg.sender], netAmount);

@@ -124,7 +124,7 @@ contract DeployScript is ScaffoldETHDeploy {
         uint256[] memory tokenIds = new uint256[](1); // Dynamic array with a single element
         tokenIds[0] = 0;
 
-        nix.addOrder(address(apes), address(0), Nix.BuyOrSell.Sell, Nix.AnyOrAll.Any, tokenIds, 0.001*1e18,  0, 0, 0, address(0));
+        nix.addOrder(address(apes), address(0), Nix.BuyOrSell.Sell, Nix.AnyOrAll.Any, tokenIds, 0.001*1e18,  0, 0, 0, "");
 
 
         NFTHelper nftHelper = new NFTHelper(address(apes), address(nouns));
