@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     YourContract: {
-      address: "0x1291Be112d480055DaFd8a610b7d1e203891C274",
+      address: "0x0355B7B8cb128fA5692729Ab3AAa199C1753f726",
       abi: [
         {
           inputs: [
@@ -149,7 +149,7 @@ const deployedContracts = {
       ],
     },
     WETH9: {
-      address: "0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154",
+      address: "0x202CCe504e04bEd6fC0521238dDf04Bc9E8E15aB",
       abi: [
         {
           anonymous: false,
@@ -438,7 +438,7 @@ const deployedContracts = {
       ],
     },
     MockRoyaltyEngineV1: {
-      address: "0xb7278A61aa25c888815aFC32Ad3cC52fF24fE575",
+      address: "0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8",
       abi: [
         {
           inputs: [
@@ -519,7 +519,7 @@ const deployedContracts = {
       ],
     },
     Nix: {
-      address: "0xCD8a1C3ba11CF5ECfa6267617243239504a98d90",
+      address: "0x172076E0166D1F9Cc711C77Adf8488051744980C",
       abi: [
         {
           inputs: [
@@ -1429,8 +1429,255 @@ const deployedContracts = {
         },
       ],
     },
+    NixHelper: {
+      address: "0x4EE6eCAD1c2Dae9f525404De8555724e3c35d07B",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "contract Nix",
+              name: "_nix",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+            {
+              internalType: "uint256[]",
+              name: "orderIndices",
+              type: "uint256[]",
+            },
+          ],
+          name: "getOrders",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "makers",
+              type: "address[]",
+            },
+            {
+              internalType: "address[]",
+              name: "takers",
+              type: "address[]",
+            },
+            {
+              internalType: "uint256[][]",
+              name: "tokenIds",
+              type: "uint256[][]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "prices",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[7][]",
+              name: "data",
+              type: "uint256[7][]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256[]",
+              name: "tokensIndices",
+              type: "uint256[]",
+            },
+          ],
+          name: "getTokens",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "tokens",
+              type: "address[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "ordersLengthList",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "executedList",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "volumeTokenList",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "volumeWethList",
+              type: "uint256[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256[]",
+              name: "tradeIndexes",
+              type: "uint256[]",
+            },
+          ],
+          name: "getTrades",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "takers",
+              type: "address[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "royaltyFactors",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "blockNumbers",
+              type: "uint256[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "token",
+                  type: "address",
+                },
+                {
+                  internalType: "uint64",
+                  name: "orderIndex",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Nix.ExecutedOrder[][]",
+              name: "ordersList",
+              type: "tuple[][]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "nix",
+          outputs: [
+            {
+              internalType: "contract Nix",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "maker",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "taker",
+                  type: "address",
+                },
+                {
+                  internalType: "enum Nix.BuyOrSell",
+                  name: "buyOrSell",
+                  type: "uint8",
+                },
+                {
+                  internalType: "enum Nix.AnyOrAll",
+                  name: "anyOrAll",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "tokenIdsKey",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "price",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint64",
+                  name: "expiry",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "tradeCount",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "tradeMax",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "royaltyFactor",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Nix.Order",
+              name: "order",
+              type: "tuple",
+            },
+          ],
+          name: "orderStatus",
+          outputs: [
+            {
+              internalType: "enum NixHelper.OrderStatus",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "weth",
+          outputs: [
+            {
+              internalType: "contract IERC20Partial",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+    },
     BoredApes: {
-      address: "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1",
+      address: "0xBEc49fA140aCaA83533fB00A2BB19bDdd0290f25",
       abi: [
         {
           inputs: [],
@@ -2159,7 +2406,7 @@ const deployedContracts = {
       ],
     },
     Nouns: {
-      address: "0xc351628EB244ec633d5f21fBD6621e1a683B1181",
+      address: "0x46b142DD1E924FAb83eCc3c08e4D46E82f005e0E",
       abi: [
         {
           inputs: [],

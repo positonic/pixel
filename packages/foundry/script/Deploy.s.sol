@@ -6,6 +6,8 @@ import "../contracts/YourContract.sol";
 import "../contracts/nix/MockRoyaltyEngineV1.sol";
 import "../contracts/utils/WETH9.sol";
 import "../contracts/nix/Nix.sol";
+import "../contracts/nix/NixHelper.sol";
+
 import "../contracts/tokens/BoredApes.sol";
 import "../contracts/tokens/Nouns.sol";
 import "../contracts/tokens/NFTHelper.sol";
@@ -84,6 +86,13 @@ contract DeployScript is ScaffoldETHDeploy {
             string.concat(
                 "Nix deployed at: ",
                 vm.toString(address(nix))
+            )
+        );
+       NixHelper nixHelper = new NixHelper(nix);
+        console.logString(
+            string.concat(
+                "NixHelper deployed at: ",
+                vm.toString(address(nixHelper))
             )
         );
 
