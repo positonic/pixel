@@ -66,14 +66,6 @@ contract DeployScript is ScaffoldETHDeploy {
             )
         );
 
-        NFTHelper nftHelper = new NFTHelper();
-        console.logString(
-            string.concat(
-                "NFTHelper deployed at: ",
-                vm.toString(address(nftHelper))
-            )
-        );
-
         MockRoyaltyEngineV1 royaltyEngine = new MockRoyaltyEngineV1( royalty1,  royalty2);
         console.logString(
             string.concat(
@@ -104,9 +96,9 @@ contract DeployScript is ScaffoldETHDeploy {
             )
         );
 
-        apes.mint(0xB03F0121b8F2BB26b1c882cAB693D645230F385D);
-        apes.mint(0xB03F0121b8F2BB26b1c882cAB693D645230F385D);
-        apes.mint(0xB03F0121b8F2BB26b1c882cAB693D645230F385D);
+        apes.mint(0xD67450f8F8044F26F46dB279Da9090f1873Be1c3);
+        apes.mint(0xD67450f8F8044F26F46dB279Da9090f1873Be1c3);
+        apes.mint(0xD67450f8F8044F26F46dB279Da9090f1873Be1c3);
 
         Nouns nouns = new Nouns();
         console.logString(
@@ -125,6 +117,14 @@ contract DeployScript is ScaffoldETHDeploy {
 
         nix.addOrder(address(apes), address(0), Nix.BuyOrSell.Sell, Nix.AnyOrAll.Any, tokenIds, 0.001*1e18,  0, 0, 0, address(0));
 
+
+        NFTHelper nftHelper = new NFTHelper(address(apes), address(nouns));
+        console.logString(
+            string.concat(
+                "NFTHelper deployed at: ",
+                vm.toString(address(nftHelper))
+            )
+        );
 
         // address[] memory tokens = new address[](1);
         // tokens[0]  = address(apes);
