@@ -24,8 +24,8 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
 
 const bottomNavMap: Record<string, number> = {
   "/profile": 0,
-  "/chat": 1,
-  "/map": 2,
+  "/tokens": 1,
+  "/chat": 2,
 };
 
 const BottomNavigation = () => {
@@ -39,7 +39,7 @@ const BottomNavigation = () => {
         <UserCircleIcon className="h-5 w-5" />
         <span className="btm-nav-label">Profile</span>
       </Link>
-      <Link href="/collections" className={activeIndex === 2 ? "active bg-secondary" : ""}>
+      <Link href="/tokens" className={activeIndex === 2 ? "active bg-secondary" : ""}>
         <CubeIcon className="h-5 w-5" />
         <span className="btm-nav-label">Collections</span>
       </Link>
@@ -73,7 +73,7 @@ export const Header = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink href="/collections">
+        <NavLink href="/tokens">
           <CubeIcon className="h-4 w-4" />
           Collections
         </NavLink>

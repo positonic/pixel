@@ -82,7 +82,7 @@ contract DeployScript is ScaffoldETHDeploy {
                 vm.toString(address(nix))
             )
         );
-        Pixel pixel = new Pixel();
+        pixel = new Pixel();
         console.logString(
             string.concat(
                 "Pixel deployed at: ",
@@ -105,6 +105,8 @@ contract DeployScript is ScaffoldETHDeploy {
             )
         );
 
+        apes.mint(0xD67450f8F8044F26F46dB279Da9090f1873Be1c3);
+        apes.mint(0xD67450f8F8044F26F46dB279Da9090f1873Be1c3);
         apes.mint(0xD67450f8F8044F26F46dB279Da9090f1873Be1c3);
         apes.mint(0xD67450f8F8044F26F46dB279Da9090f1873Be1c3);
         apes.mint(0xD67450f8F8044F26F46dB279Da9090f1873Be1c3);

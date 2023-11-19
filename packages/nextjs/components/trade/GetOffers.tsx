@@ -37,7 +37,7 @@ function GetOffers({ address }: { address: string }) {
       </button>
       <button
         className="btn btn-primary rounded-full capitalize font-normal  mx-auto custom-button "
-        onClick={() => router.push("/order/0xBEc49fA140aCaA83533fB00A2BB19bDdd0290f25/0")}
+        onClick={() => router.push("/order/0x641382C07dA1C4E712DC404cd13d22D99D1C1f25/0")}
       >
         DEMO OFFER
       </button>
