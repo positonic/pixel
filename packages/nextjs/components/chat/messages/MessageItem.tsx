@@ -11,7 +11,7 @@ import { beautifyAddress } from "~~/utils/helpers";
 import { axiosGet } from "~~/utils/http";
 
 const zeroAddress = "0x0000000000000000000000000000000000000000";
-const boredApeAddress = "0x7580708993de7CA120E957A62f26A5dDD4b3D8aC";
+const boredApeAddress = "0x902c652EDF6d24d67e8C0d3e8651A889529Dd0a1";
 
 export const MessageItem = ({
   message,
