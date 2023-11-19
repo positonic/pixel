@@ -1,7 +1,3 @@
-import { useRef } from "react";
-import { ActionModal } from "../modals/ActionModal";
-// import { ListNFTsModal } from "../modals/ListNFTsModal";
-import { NFTListModal } from "../modals/NFTListModal";
 import { ChatList } from "./ChatList";
 import { Messages } from "./messages/Messages";
 import { IFeeds } from "@pushprotocol/restapi";
@@ -14,8 +10,6 @@ export default function Chat() {
 
   const { address } = useAccount();
   const { user } = usePush();
-  const nftListDialogRef = useRef<HTMLDialogElement>(null);
-  const listNftsDialogRef = useRef<HTMLDialogElement>(null);
 
   const onChatSelect = (chat: IFeeds) => {
     const groupInfo = chat?.groupInformation;
@@ -27,8 +21,6 @@ export default function Chat() {
     setSelectedChat(chat);
   };
 
-  nftListDialogRef.current?.showModal();
-
   return (
     <div className="container mx-auto shadow-lg rounded-lg md:flex md:flex-col mt-10">
       <div className="px-5 py-5 flex justify-between items-center bg-primary border-b-2 border-base-100 rounded-t-2xl">
@@ -36,28 +28,6 @@ export default function Chat() {
           {/* <Blockies seed={address || ""} size={10} className="identicon rounded-full" /> */}
         </div>
       </div>
-      <ActionModal
-        isOpen={false}
-        onClose={() => {
-          console.log("close");
-        }}
-        onConfirmSent={() => {
-          console.log("confirm");
-        }}
-        loading={false}
-      />
-      <NFTListModal
-        dialogRef={nftListDialogRef}
-        onClick={() => {
-          listNftsDialogRef.current?.showModal();
-        }}
-      />
-      {/* <ListNFTsModal
-        dialogRef={listNftsDialogRef}
-        onClick={(nftsForSale: number[]) => {
-          console.log("nftsForSale:", nftsForSale);
-        }}
-      /> */}
 
       <div
         className="flex flex-col md:flex-row justify-between bg-base-300"

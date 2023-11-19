@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     YourContract: {
-      address: "0xfcDB4564c18A9134002b9771816092C9693622e3",
+      address: "0xe1Fd27F4390DcBE165f4D60DBF821e4B9Bb02dEd",
       abi: [
         {
           inputs: [
@@ -149,7 +149,7 @@ const deployedContracts = {
       ],
     },
     WETH9: {
-      address: "0x927b167526bAbB9be047421db732C663a0b77B11",
+      address: "0xc582Bc0317dbb0908203541971a358c44b1F3766",
       abi: [
         {
           anonymous: false,
@@ -438,7 +438,7 @@ const deployedContracts = {
       ],
     },
     MockRoyaltyEngineV1: {
-      address: "0x32EEce76C2C2e8758584A83Ee2F522D4788feA0f",
+      address: "0xB2b580ce436E6F77A5713D80887e14788Ef49c9A",
       abi: [
         {
           inputs: [
@@ -519,7 +519,7 @@ const deployedContracts = {
       ],
     },
     Nix: {
-      address: "0x01c1DeF3b91672704716159C9041Aeca392DdFfb",
+      address: "0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab",
       abi: [
         {
           inputs: [
@@ -949,11 +949,6 @@ const deployedContracts = {
             {
               internalType: "uint256",
               name: "tradeMax",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "royaltyFactor",
               type: "uint256",
             },
             {
@@ -1464,7 +1459,7 @@ const deployedContracts = {
       ],
     },
     Pixel: {
-      address: "0x02b0B4EFd909240FCB2Eb5FAe060dC60D112E3a4",
+      address: "0x66F625B8c4c635af8b74ECe2d7eD0D58b4af3C3d",
       abi: [
         {
           inputs: [],
@@ -1762,7 +1757,7 @@ const deployedContracts = {
       ],
     },
     NixHelper: {
-      address: "0x638A246F0Ec8883eF68280293FFE8Cfbabe61B44",
+      address: "0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB",
       abi: [
         {
           inputs: [
@@ -2019,7 +2014,7 @@ const deployedContracts = {
       ],
     },
     BoredApes: {
-      address: "0x6C2d83262fF84cBaDb3e416D527403135D757892",
+      address: "0x74Cf9087AD26D541930BaC724B7ab21bA8F00a27",
       abi: [
         {
           inputs: [],
@@ -2748,7 +2743,7 @@ const deployedContracts = {
       ],
     },
     Nouns: {
-      address: "0x0ed64d01D0B4B655E410EF1441dD677B695639E7",
+      address: "0x26B862f640357268Bd2d9E95bc81553a2Aa81D7E",
       abi: [
         {
           inputs: [],
@@ -3477,7 +3472,7 @@ const deployedContracts = {
       ],
     },
     NFTHelper: {
-      address: "0xde2Bd2ffEA002b8E84ADeA96e5976aF664115E2c",
+      address: "0xaB7B4c595d3cE8C85e16DA86630f2fc223B05057",
       abi: [
         {
           inputs: [

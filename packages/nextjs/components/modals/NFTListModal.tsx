@@ -26,7 +26,16 @@ export const NFTListModal = ({
   return (
     <Modal className="max-w-xl" ref={dialogRef}>
       <form method="dialog">
-        <Button size="sm" color="ghost" shape="circle" className="absolute right-2 top-2">
+        <Button
+          size="sm"
+          color="ghost"
+          shape="circle"
+          className="absolute right-2 top-2"
+          onClick={() => {
+            setNFTsForSale([]);
+            setSelectedNfts([]);
+          }}
+        >
           x
         </Button>
       </form>
@@ -63,7 +72,7 @@ export const NFTListModal = ({
         <form method="dialog">
           <Button
             className="btn bg-black btn-primary btn-outline mt-2 w-full"
-            disabled={loading}
+            disabled={loading || selectedNfts.length === 0}
             onClick={() => {
               setNFTsForSale(selectedNfts);
               onClick();

@@ -8,6 +8,9 @@ import moment from "moment";
 import { FiCodesandbox } from "react-icons/fi";
 import { LoadingComponent } from "~~/components/LoadingComponent";
 import { MessageInput } from "~~/components/input/MessageInput";
+import { ActionModal } from "~~/components/modals/ActionModal";
+import { ListNFTsModal } from "~~/components/modals/ListNFTsModal";
+import { NFTListModal } from "~~/components/modals/NFTListModal";
 import { useMessages } from "~~/hooks/push/useMessages";
 import { useChatState } from "~~/services/store/store";
 
@@ -21,9 +24,12 @@ export const Messages = ({ user, address }: MessagesProps) => {
   const { messages, loading: messagesLoading, sendMessage } = useMessages(selectedAddress);
 
   const [isSending, setIsSending] = useState(false);
+  const [actionModalOpen, setActionModalOpen] = useState(false);
   const [messageInput, setMessageInput] = useState("");
 
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
+  const nftListDialogRef = useRef<HTMLDialogElement>(null);
+  const listNftsDialogRef = useRef<HTMLDialogElement>(null);
 
   const [requestLoading, setRequestLoading] = useState(false);
 
@@ -73,6 +79,26 @@ export const Messages = ({ user, address }: MessagesProps) => {
 
   return (
     <>
+      <ActionModal
+        isOpen={actionModalOpen}
+        onClose={() => setActionModalOpen(false)}
+        onClick={() => {
+          nftListDialogRef.current?.showModal();
+        }}
+      />
+      <NFTListModal
+        dialogRef={nftListDialogRef}
+        onClick={() => {
+          listNftsDialogRef.current?.showModal();
+        }}
+      />
+      <ListNFTsModal
+        chatId={selectedChat?.chatId || selectedChat?.groupInformation?.chatId || ""}
+        dialogRef={listNftsDialogRef}
+        onConfirm={() => {
+          console.log("onConfirm:");
+        }}
+      />
       {messagesLoading ? (
         <div
           style={{
@@ -126,7 +152,7 @@ export const Messages = ({ user, address }: MessagesProps) => {
                       />
 
                       <label className="cursor-pointer">
-                        <FiCodesandbox className="text-black h-10 w-10" />
+                        <FiCodesandbox className="text-black h-10 w-10" onClick={() => setActionModalOpen(true)} />
                       </label>
                     </div>
                   ) : (
