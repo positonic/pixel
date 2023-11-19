@@ -99,12 +99,14 @@ export interface SingleOrderData {
   tradeCount: number;
   tradeMax: number;
   royaltyFactor: number;
+  executed: boolean;
 }
 
 export const useGetOrder = (tokenAddress: string, orderIndex: bigint): SingleOrderData | null => {
   const { data: result } = useScaffoldContractRead({
     contractName: "Nix", // Update with your contract name
     functionName: "getOrder",
+    watch: true,
     args: [tokenAddress, orderIndex],
   });
 
@@ -123,6 +125,7 @@ export const useGetOrder = (tokenAddress: string, orderIndex: bigint): SingleOrd
     tradeCount: Number(result.tradeCount),
     tradeMax: Number(result.tradeMax),
     royaltyFactor: Number(result.royaltyFactor),
+    executed: result.executed,
   };
 
   return order;

@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { Button, Card } from "react-daisyui";
+import { FiCheck } from "react-icons/fi";
 import { formatEther } from "viem";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useGetOrder } from "~~/hooks/pixel";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { Message } from "~~/types";
 import { beautifyAddress } from "~~/utils/helpers";
 import { axiosGet } from "~~/utils/http";
+
+const zeroAddress = "0x0000000000000000000000000000000000000000";
+const boredApeAddress = "0x7580708993de7CA120E957A62f26A5dDD4b3D8aC";
 
 export const MessageItem = ({
   message,
@@ -36,6 +41,24 @@ export const MessageItem = ({
     setImages(returnValue);
   };
 
+  const { writeAsync: executeOrders, isMining } = useScaffoldContractWrite({
+    contractName: "Nix",
+    functionName: "executeOrders",
+    args: [[], [], [[]], BigInt(1), BigInt(0), zeroAddress],
+    value: order?.price,
+    onBlockConfirmation: async txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
+
+  const buy = async () => {
+    if (!message.tokenIds) return;
+    const tokenIds = message.tokenIds.map(id => BigInt(id));
+    executeOrders({
+      args: [[boredApeAddress], [BigInt(message.orderIndex || 0)], [tokenIds], BigInt(0), BigInt(0), zeroAddress],
+    });
+  };
+
   useEffect(() => {
     fetchImages(message.tokenIds || []);
   }, []);
@@ -58,7 +81,7 @@ export const MessageItem = ({
           message.from === address ? "bg-purple-900 text-white" : "bg-gray-200"
         }`}
       >
-        {order && (
+        {order ? (
           <div>
             <div className="mb-3"></div>
             <Card side="sm" compact={true}>
@@ -84,17 +107,30 @@ export const MessageItem = ({
               <Card.Body>
                 <Card.Title tag="h2">BAYC</Card.Title>
                 <Card.Title tag="h2">{formatEther(order.price)} ETH</Card.Title>
-                {/* <Card.Body>
-       <h1 className="text-xl">10 ETH</h1>
-     </Card.Body> */}
                 <Card.Actions className="justify-end">
-                  <Button color="primary">Buy Now</Button>
+                  {order.executed ? (
+                    <label className="cursor-pointer">
+                      <FiCheck className="text-black h-10 w-10" />
+                    </label>
+                  ) : (
+                    // <Button color="primary" disabled={true}>
+
+                    // </Button>
+                    <>
+                      {message.from !== address && (
+                        <Button color="primary" onClick={buy} loading={isMining} disabled={isMining}>
+                          Buy Now
+                        </Button>
+                      )}
+                    </>
+                  )}
                 </Card.Actions>
               </Card.Body>
             </Card>
           </div>
+        ) : (
+          <>{message.content}</>
         )}
-        {message.content}
       </div>
 
       <div className="chat-footer opacity-50 text-primary-content">

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-// import { MessageType } from "@pushprotocol/restapi/src/lib/constants";
+import { MessageType } from "@pushprotocol/restapi/src/lib/constants";
 import { useAccount } from "wagmi";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
-// import { usePush } from "~~/hooks/push/context/usePush";
+import { usePush } from "~~/context/push/hooks/usePush";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { useAccountBalance } from "~~/hooks/scaffold-eth";
 
@@ -11,7 +11,7 @@ export const VouchInput = ({ vouchAddress }: { vouchAddress: string }) => {
   const { balance: senderBalance } = useAccountBalance(senderAddress);
 
   const { balance } = useAccountBalance(vouchAddress);
-  // const { user } = usePush();
+  const { user } = usePush();
   const vouchBalance: number =
     balance === 0 && senderBalance && senderBalance >= 1.0 ? 0.1 * 1e18 : ((senderBalance ?? 0) * 1e18) / 10;
 
@@ -32,10 +32,10 @@ export const VouchInput = ({ vouchAddress }: { vouchAddress: string }) => {
   });
 
   const vouch = async () => {
-    // if (!user) return;
+    if (!user) return;
     console.log("Sending message:", "GM");
-    // const message = await user.chat.send(vouchAddress, { type: MessageType.TEXT, content: "GM" });
-    // console.log("message:", message);
+    const message = await user.chat.send(vouchAddress, { type: MessageType.TEXT, content: "GM" });
+    console.log("message:", message);
     writeVouch();
   };
 

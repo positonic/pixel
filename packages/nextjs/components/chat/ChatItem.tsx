@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import Image from "next/image";
 import { IFeeds } from "@pushprotocol/restapi";
 import { useChatState } from "~~/services/store/store";
-import { beautifyAddress } from "~~/utils/helpers";
+import { beautifyAddress, isJson } from "~~/utils/helpers";
 
 export const ChatItem = ({ chat, onSelect }: { chat: IFeeds; onSelect: (chat: IFeeds) => void }) => {
   const { selectedAddress } = useChatState();
@@ -13,6 +13,8 @@ export const ChatItem = ({ chat, onSelect }: { chat: IFeeds; onSelect: (chat: IF
   const handleSelect = () => {
     onSelect(chat);
   };
+
+  const isAction = isJson(chat.msg.messageContent);
 
   return (
     <div
@@ -33,7 +35,7 @@ export const ChatItem = ({ chat, onSelect }: { chat: IFeeds; onSelect: (chat: IF
       <div className="w-full">
         <div className="text-lg font-semibold">{chatName}</div>
         <span className={`text-gray-500 ${chat?.did?.substring(7) === selectedAddress ? "text-black" : ""}`}>
-          {chat.msg.messageContent}
+          {isAction ? "NFT" : chat.msg.messageContent}
         </span>
       </div>
     </div>

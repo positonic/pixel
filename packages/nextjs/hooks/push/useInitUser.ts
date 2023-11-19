@@ -14,7 +14,7 @@ export const useInitUser = (signer: any) => {
       if (signer) {
         const account = await signer.account;
         if (userData.userAddress !== account.address) {
-          const newUser = await PushAPI.initialize(signer, { env: ENV.PROD });
+          const newUser = await PushAPI.initialize(signer, { env: ENV.STAGING });
           setUserData({ user: newUser, userAddress: account.address, init: true });
         }
       }

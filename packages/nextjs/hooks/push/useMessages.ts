@@ -30,7 +30,19 @@ export const useMessages = (selectedAddress: string) => {
       content: message.content,
       timestamp: (sentMessage.timestamp || 0) / 1000,
       transaction: message.transaction,
+      tokenIds: [],
+      orderIndex: undefined,
+      collection: "",
     };
+
+    if (isJson(message.content)) {
+      const messageObj = JSON.parse(message.content);
+      if (messageObj.token && messageObj.orderIndex) {
+        newMessage.collection = messageObj.token;
+        newMessage.orderIndex = messageObj.orderIndex;
+        newMessage.tokenIds = messageObj.tokenIds;
+      }
+    }
 
     setMessages(prev => [...prev, newMessage]);
     return newMessage;

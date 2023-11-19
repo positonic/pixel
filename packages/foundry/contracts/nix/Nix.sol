@@ -365,12 +365,12 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
             }
             (address nftFrom, address nftTo) = (order.buyOrSell == BuyOrSell.Buy) ? (msg.sender, order.maker) : (order.maker, msg.sender);
             emit OrderExecuted(tokenInfo.token, orderIndexes[i], trades.length - 1, tokenIds);
-            uint[] memory orderTokenIds = _getTokenIds(order.tokenIdsKey);
+            // uint[] memory orderTokenIds = _getTokenIds(order.tokenIdsKey);
             if (order.anyOrAll == AnyOrAll.Any) {
                 for (uint j = 0; j < tokenIds.length; j++) {
-                    if (order.tokenIdsKey != bytes32(0) && !orderTokenIds.includes(tokenIds[j])) {
-                        revert TokenIdNotFound(orderIndexes[i], tokenIds[j]);
-                    }
+                    // if (order.tokenIdsKey != bytes32(0) && !orderTokenIds.includes(tokenIds[j])) {
+                    //     revert TokenIdNotFound(orderIndexes[i], tokenIds[j]);
+                    // }
                     IERC721Partial(tokenInfo.token).safeTransferFrom(nftFrom, nftTo, tokenIds[j]);
                     tokenInfo.volumeToken++;
                     tokenInfo.volumeWeth += order.price;
@@ -378,31 +378,31 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
                     order.tradeCount++;
                 }
             } else {
-                if (tokenIds.length != orderTokenIds.length) {
-                    revert TokenIdsMismatch(orderIndexes[i], orderTokenIds, tokenIds);
-                }
-                for (uint j = 0; j < orderTokenIds.length; j++) {
-                    if (tokenIds[j] != orderTokenIds[j]) {
-                        revert TokenIdsMismatch(orderIndexes[i], orderTokenIds, tokenIds);
-                    }
-                    IERC721Partial(tokenInfo.token).safeTransferFrom(nftFrom, nftTo, tokenIds[j]);
-                    tokenInfo.volumeToken++;
-                }
+                // if (tokenIds.length != orderTokenIds.length) {
+                //     revert TokenIdsMismatch(orderIndexes[i], orderTokenIds, tokenIds);
+                // }
+                // for (uint j = 0; j < orderTokenIds.length; j++) {
+                //     if (tokenIds[j] != orderTokenIds[j]) {
+                //         revert TokenIdsMismatch(orderIndexes[i], orderTokenIds, tokenIds);
+                //     }
+                //     IERC721Partial(tokenInfo.token).safeTransferFrom(nftFrom, nftTo, tokenIds[j]);
+                //     tokenInfo.volumeToken++;
+                // }
                 order.tradeCount++;
                 tokenInfo.volumeWeth += order.price;
                 // NOTE - Royalty information for the FIRST tokenId for All
-                addNetting(tokenInfo, tokenIds[0], trade, order);
+                // addNetting(tokenInfo, tokenIds[0], trade, order);
             }
             if (order.tradeCount > order.tradeMax) {
                 revert OrderMaxxed(orderIndexes[i], order.tradeCount, order.tradeMax);
             }
             order.executed = true;
         }
-        if (trade.netting[msg.sender] != netAmount) {
-            revert NetAmountMismatch(trade.netting[msg.sender], netAmount);
-        }
-        transferNetted(trade);
-        handleTips(integrator);
+        // if (trade.netting[msg.sender] != netAmount) {
+        //     revert NetAmountMismatch(trade.netting[msg.sender], netAmount);
+        // }
+        // transferNetted(trade);
+        // handleTips(integrator);
     }
 
     function addNetting(Token storage tokenInfo, uint tokenId, Trade storage trade, Order memory order) private {

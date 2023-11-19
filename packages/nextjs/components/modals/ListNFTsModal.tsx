@@ -3,10 +3,12 @@ import { IntegerInput } from "../scaffold-eth";
 import { Interface } from "ethers/lib/utils";
 import { Button, Modal } from "react-daisyui";
 import { Log, keccak256, parseUnits, toHex } from "viem";
+import { useAccount } from "wagmi";
+import { nixAddress, useIsCollectionApproved } from "~~/hooks/pixel/useApproved";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { useUserNFTsState } from "~~/services/store/store";
 
-const boredApeAddress = "0x1780bCf4103D3F501463AD3414c7f4b654bb7aFd";
+const boredApeAddress = "0x7580708993de7CA120E957A62f26A5dDD4b3D8aC";
 const zeroAddress = "0x0000000000000000000000000000000000000000";
 
 export const ListNFTsModal = ({
@@ -18,9 +20,11 @@ export const ListNFTsModal = ({
   dialogRef: RefObject<HTMLDialogElement>;
   onConfirm: (token: string, orderIndex: number, tokenIds: number[]) => void;
 }) => {
+  const { address } = useAccount();
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState(BigInt(0));
   const { nftsForSale: tokens } = useUserNFTsState();
+  const approved = useIsCollectionApproved(address || "");
 
   const { writeAsync: addOrder, isMining } = useScaffoldContractWrite({
     contractName: "Nix",
@@ -33,6 +37,16 @@ export const ListNFTsModal = ({
       onConfirm(token, orderIndex, tokenIds);
     },
   });
+
+  const { writeAsync: approve, isMining: approveIsMining } = useScaffoldContractWrite({
+    contractName: "BoredApes",
+    functionName: "setApprovalForAll",
+    args: [nixAddress, true],
+  });
+
+  const handleApprove = async () => {
+    approve();
+  };
   // const { writeAsync: addOrder, onBlockConfirmation } = useAddOrder();
 
   // const handleSelect = (e: any, tokenId: number) => {
@@ -99,9 +113,19 @@ export const ListNFTsModal = ({
       <Modal.Actions>
         {/* <form method="dialog"> */}
         <IntegerInput value={price} placeholder="10 ETH" name="price" onChange={value => setPrice(BigInt(value))} />
+        {!approved && (
+          <Button
+            className="btn bg-black btn-primary btn-outline mt-2 w-full"
+            disabled={approveIsMining}
+            loading={approveIsMining}
+            onClick={handleApprove}
+          >
+            Approve
+          </Button>
+        )}
         <Button
           className="btn bg-black btn-primary btn-outline mt-2 w-full"
-          disabled={loading || isMining || !price}
+          disabled={loading || isMining || !price || !approved}
           onClick={list}
         >
           List

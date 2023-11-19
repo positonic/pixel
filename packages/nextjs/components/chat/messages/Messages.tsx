@@ -58,10 +58,7 @@ export const Messages = ({ user, address }: MessagesProps) => {
     const content = {
       token,
       orderIndex,
-      // price: formattedPrice,
       tokenIds,
-      // tokenImages,
-      // orderType,
     };
 
     const message = {
