@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function ViewCollections() {
   return (
     <section className="flex flex-col gap-2 mb-4 max-w-md mx-auto px-5">
@@ -6,13 +8,17 @@ function ViewCollections() {
 
         <div className="grid grid-cols-2 gap-4 p-5">
           <div className="flex flex-col items-center">
-            <img src="tokens/bayc.png" alt="Image 1" className="w-32 h-32 object-cover mb-2" />
-            <p className="text-md">Bored Ape Yacht Club</p>
+            <Link href="/tokens/bayc">
+              <img src="tokens/bayc.png" alt="Image 1" className="w-32 h-32 object-cover mb-2" />
+              <p className="text-md">Bored Ape Yacht Club</p>
+            </Link>
           </div>
 
           <div className="flex flex-col items-center">
-            <img src="tokens/noun.png" alt="Image 2" className="w-32 h-32 object-cover mb-2" />
-            <p className="text-md">Nouns</p>
+            <Link href="/tokens/nouns">
+              <img src="tokens/noun.png" alt="Image 2" className="w-32 h-32 object-cover mb-2" />
+              <p className="text-md">Nouns</p>
+            </Link>
           </div>
           {/* 
     <div class="flex flex-col items-center">
