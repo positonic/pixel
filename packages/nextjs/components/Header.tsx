@@ -39,11 +39,11 @@ const BottomNavigation = () => {
         <UserCircleIcon className="h-5 w-5" />
         <span className="btm-nav-label">Profile</span>
       </Link>
-      <Link href="/tokens" className={activeIndex === 2 ? "active bg-secondary" : ""}>
+      <Link href="/tokens" className={activeIndex === 1 ? "active bg-secondary" : ""}>
         <CubeIcon className="h-5 w-5" />
         <span className="btm-nav-label">Collections</span>
       </Link>
-      <Link href="/chat" className={activeIndex === 1 ? "active bg-secondary" : ""}>
+      <Link href="/chat" className={activeIndex === 2 ? "active bg-secondary" : ""}>
         <ChatBubbleLeftIcon className="h-5 w-5" />
         <span className="btm-nav-label">Chat</span>
       </Link>
