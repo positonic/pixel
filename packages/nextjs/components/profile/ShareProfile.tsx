@@ -39,9 +39,8 @@ function ShareProfile({ userAddress }: { userAddress: string }) {
   return (
     <section className="max-w-md mx-auto">
       {qr.imageURL && (
-        <div className="max-w-[90vw] mx-auto mt-8">
-          <h1 className="text-center text-2xl font-bold">Share your QR</h1>
-          <figure className="overflow-hidden rounded-xl mt-4">
+        <div className="max-w-[90vw] mx-auto mt-1">
+          <figure className="overflow-hidden rounded-xl mt-1">
             <img className="block" src={qr.imageURL} alt="" />
           </figure>
           <nav className="flex  mt-4 relative justify-end items-center overflow-hidden bg-grey/50 text-black/80 b-black rounded-xl text-sm">
