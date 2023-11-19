@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
-import ViewProfile from "~~/components/profile/ViewProfile";
+import ShareProfile from "~~/components/profile/ShareProfile";
 import VouchInput from "~~/components/profile/VouchInput";
 import { useGetUserName } from "~~/hooks/pixel";
 
@@ -15,7 +15,7 @@ const Vouch = () => {
   return (
     <>
       {!userName.userName ? (
-        <ViewProfile address={address} />
+        <ShareProfile userAddress={address} />
       ) : address === vouchAddress ? (
         <div className="grid flex-grow items-center mx-auto">Cannot vouch for yourself.</div>
       ) : (

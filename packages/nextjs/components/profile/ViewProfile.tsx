@@ -35,12 +35,7 @@ function ViewProfile({ address }: { address: string }) {
       </div>
 
       <ShareProfile userAddress={address} />
-      {/* <button
-        className="btn btn-primary rounded-full capitalize font-normal  mx-auto custom-button "
-        onClick={() => router.push("/share")}
-      >
-        SHARE QR
-      </button> */}
+
       <button
         className="btn btn-primary rounded-full capitalize font-normal  mx-auto custom-button "
         onClick={() => router.push("/edit")}
