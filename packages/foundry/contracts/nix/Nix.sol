@@ -75,7 +75,7 @@ contract Nix is Owned, ReentrancyGuard, ERC721TokenReceiver {
 
     address[] private tokensIndex;
     mapping(address => Token) private tokens;
-    mapping(bytes32 => uint[]) tokenIdsData;
+    mapping(bytes32 => uint[]) public tokenIdsData;
     mapping(string => uint64[]) public chatIdOrders; // chatId => orderIndex
     Trade[] private trades;
 

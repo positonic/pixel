@@ -1,11 +1,12 @@
 import { RefObject, useState } from "react";
 import { IntegerInput } from "../scaffold-eth";
+import { Interface } from "ethers/lib/utils";
 import { Button, Modal } from "react-daisyui";
-import { parseUnits } from "viem";
+import { Log, keccak256, parseUnits, toHex } from "viem";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { useUserNFTsState } from "~~/services/store/store";
 
-const boredApeAddress = "0x74Cf9087AD26D541930BaC724B7ab21bA8F00a27";
+const boredApeAddress = "0x1780bCf4103D3F501463AD3414c7f4b654bb7aFd";
 const zeroAddress = "0x0000000000000000000000000000000000000000";
 
 export const ListNFTsModal = ({
@@ -15,7 +16,7 @@ export const ListNFTsModal = ({
 }: {
   chatId: string;
   dialogRef: RefObject<HTMLDialogElement>;
-  onConfirm: () => void;
+  onConfirm: (token: string, orderIndex: number, tokenIds: number[]) => void;
 }) => {
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState(BigInt(0));
@@ -25,10 +26,11 @@ export const ListNFTsModal = ({
     contractName: "Nix",
     functionName: "addOrder",
     args: ["", "", 0, 1, [BigInt(1), BigInt(2)], BigInt(0), BigInt(0), BigInt(1), ""],
-    onBlockConfirmation: txnReceipt => {
+    onBlockConfirmation: async txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-      onConfirm();
-      dialogRef.current?.close();
+      const { token, orderIndex } = decodeOrderAddedLog(txnReceipt.logs);
+      const tokenIds = tokens.map(token => Number(token.tokenId));
+      onConfirm(token, orderIndex, tokenIds);
     },
   });
   // const { writeAsync: addOrder, onBlockConfirmation } = useAddOrder();
@@ -108,4 +110,25 @@ export const ListNFTsModal = ({
       </Modal.Actions>
     </Modal>
   );
+};
+
+export const OrderAddedTopic = keccak256(toHex("OrderAdded(address,uint256)"));
+
+export const decodeOrderAddedLog = (logs: Log[]) => {
+  const iface = new Interface(["event OrderAdded(address indexed token, uint indexed orderIndex);"]);
+
+  for (const log of logs) {
+    if (log.topics[0] === OrderAddedTopic) {
+      const parsed = iface.parseLog(log);
+      return {
+        token: parsed.args[0],
+        orderIndex: parsed.args[1]?.toString(),
+      };
+    }
+  }
+
+  return {
+    token: "",
+    orderIndex: "",
+  };
 };

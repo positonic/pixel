@@ -52,6 +52,30 @@ export const Messages = ({ user, address }: MessagesProps) => {
     setIsSending(false);
   };
 
+  const sendNFTMessage = async (token: string, orderIndex: number, tokenIds: number[]) => {
+    setIsSending(true);
+
+    const content = {
+      token,
+      orderIndex,
+      // price: formattedPrice,
+      tokenIds,
+      // tokenImages,
+      // orderType,
+    };
+
+    const message = {
+      type: MessageType.TEXT,
+      content: JSON.stringify(content),
+    };
+
+    console.log("message:", message);
+    await sendMessage(selectedAddress, message);
+
+    listNftsDialogRef.current?.close();
+    setIsSending(false);
+  };
+
   const acceptRequest = async (address: string) => {
     setRequestLoading(true);
     await user?.chat.accept(address);
@@ -95,8 +119,8 @@ export const Messages = ({ user, address }: MessagesProps) => {
       <ListNFTsModal
         chatId={selectedChat?.chatId || selectedChat?.groupInformation?.chatId || ""}
         dialogRef={listNftsDialogRef}
-        onConfirm={() => {
-          console.log("onConfirm:");
+        onConfirm={(token: string, orderIndex: number, tokenIds: number[]) => {
+          sendNFTMessage(token, orderIndex, tokenIds);
         }}
       />
       {messagesLoading ? (

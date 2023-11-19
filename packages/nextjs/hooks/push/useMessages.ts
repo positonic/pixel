@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAccount } from "wagmi";
 import { usePush } from "~~/context/push/hooks/usePush";
-import { Message, TransactionType } from "~~/types";
+import { Message } from "~~/types";
 import { isJson } from "~~/utils/helpers";
 
 export const useMessages = (selectedAddress: string) => {
@@ -43,7 +43,7 @@ export const useMessages = (selectedAddress: string) => {
       const msgs = chatHistory?.reverse().map((msg: any) => {
         if (isJson(msg.messageContent)) {
           const messageObj = JSON.parse(msg.messageContent);
-          if (messageObj.type == TransactionType.NFT_SWAP && messageObj.token && messageObj.amount) {
+          if (messageObj.token && messageObj.orderIndex) {
             return {
               cid: msg.cid,
               from: msg.fromDID.substring(7),
@@ -51,6 +51,9 @@ export const useMessages = (selectedAddress: string) => {
               content: messageObj.content,
               timestamp: msg.timestamp / 1000,
               type: msg.messageType,
+              collection: messageObj.token,
+              orderIndex: messageObj.orderIndex,
+              tokenIds: messageObj.tokenIds,
             };
           }
         }

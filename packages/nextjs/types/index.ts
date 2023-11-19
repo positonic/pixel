@@ -1,7 +1,7 @@
 import { MessageType } from "@pushprotocol/restapi/src/lib/constants";
 
 export enum TransactionType {
-  NFT_SWAP = "NFT_SWAP",
+  NFT_BUY = "NFT_BUY",
 }
 
 export type Message = {
@@ -11,4 +11,8 @@ export type Message = {
   content: string;
   timestamp: number;
   type: MessageType;
+  collection?: string;
+  orderIndex?: number;
+  tokenIds?: number[];
+  images?: string[];
 };

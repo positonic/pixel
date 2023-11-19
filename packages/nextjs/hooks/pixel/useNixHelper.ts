@@ -94,7 +94,7 @@ export interface SingleOrderData {
   buyOrSell: number;
   anyOrAll: number;
   tokenIdsKey: string;
-  price: number;
+  price: bigint;
   expiry: number;
   tradeCount: number;
   tradeMax: number;
@@ -118,7 +118,7 @@ export const useGetOrder = (tokenAddress: string, orderIndex: bigint): SingleOrd
     buyOrSell: Number(result.buyOrSell),
     anyOrAll: Number(result.anyOrAll),
     tokenIdsKey: result.tokenIdsKey.toString(),
-    price: Number(result.price),
+    price: BigInt(result.price),
     expiry: Number(result.expiry),
     tradeCount: Number(result.tradeCount),
     tradeMax: Number(result.tradeMax),

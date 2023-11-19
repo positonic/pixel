@@ -194,4 +194,9 @@ contract NixHelper {
             }
         }
     }
+
+    function getOrder(address token, uint256 orderIndex) public view returns(Nix.Order memory order, uint[] memory tokenIds) {
+        order = nix.getOrder(token, orderIndex);
+        tokenIds = nix.getTokenIds(order.tokenIdsKey);
+    }
 }

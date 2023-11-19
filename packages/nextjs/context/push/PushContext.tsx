@@ -3,7 +3,7 @@ import { CONSTANTS, PushAPI } from "@pushprotocol/restapi";
 import { ProposedEventNames, STREAM } from "@pushprotocol/restapi/src/lib/pushstream/pushStreamTypes";
 import { useWalletClient } from "wagmi";
 import { useInitUser } from "~~/hooks/push/useInitUser";
-import { Message, TransactionType } from "~~/types";
+import { Message } from "~~/types";
 import { isJson } from "~~/utils/helpers";
 
 type OnNewMessageCallback = (message: Message) => void;
@@ -124,10 +124,10 @@ export const PushContextProvider: React.FC<{
   );
 };
 
-export const eventToMessage = (event: any) => {
+export const eventToMessage = (event: any): Message => {
   if (isJson(event?.message?.content)) {
     const messageObj = JSON.parse(event?.message?.content);
-    if (messageObj.type == TransactionType.NFT_SWAP && messageObj.token && messageObj.amount) {
+    if (messageObj.token && messageObj.orderIndex) {
       return {
         cid: event.reference,
         from: event.from.substring(7),
@@ -135,6 +135,9 @@ export const eventToMessage = (event: any) => {
         content: event?.message?.content,
         timestamp: event.timestamp / 1000,
         type: event.message.type,
+        collection: messageObj.token,
+        orderIndex: messageObj.orderIndex,
+        tokenIds: messageObj.tokenIds,
       };
     }
   }
