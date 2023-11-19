@@ -61,12 +61,12 @@ function CollectionProfile({ address, tokenAddress }: { address: string; tokenAd
         </div>
         <div className="flex items-center justify-between p-4 ml-6">
           <div className=" mr-8">
-            <p className="text-3xl font-bold text-center">{totalTrust.toString()}</p>
-            <p className="text-sm ">Trusted</p>
+            <p className="text-3xl font-bold text-center">{vouchesReceived.toString()}</p>
+            <p className="text-sm">Vouched</p>
           </div>
           <div>
-            <p className="text-3xl font-bold text-center">{vouchesReceived.toString()}</p>
-            <p className="text-sm">Followers</p>
+            <p className="text-3xl font-bold text-center">{totalTrust.toString()}</p>
+            <p className="text-sm ">Trusted</p>
           </div>
         </div>
       </div>
