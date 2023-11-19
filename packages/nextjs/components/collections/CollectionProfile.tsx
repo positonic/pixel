@@ -38,8 +38,8 @@ function CollectionProfile({ address, tokenAddress }: { address: string; tokenAd
     }
   }, [isSuccess]);
 
-  const { vouchesReceived } = useVouchReceivedCount(tokenAddress || "");
-  const { totalTrust } = useGetTrustScore(address || "", tokenAddress || "");
+  const { vouchesReceived } = useVouchReceivedCount(deployedContractData?.address || "");
+  const { totalTrust } = useGetTrustScore(address || "", deployedContractData?.address || "");
 
   return (
     <section className="flex flex-col gap-2 mb-4 max-w-md mx-auto px-5">
