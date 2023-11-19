@@ -30,7 +30,7 @@ export const useGetNfts = () => {
   const fetchTokensMetadata = () => {
     setLoading(true);
     if (tokens) {
-      tokens.forEach(async token => {
+      tokens.forEach(async (token: any) => {
         // "ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/1"
         const url = `https://ipfs.io/ipfs/${token.tokenURI.substring(7)}`;
 
